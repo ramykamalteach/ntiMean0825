@@ -1,0 +1,110 @@
+download and install nodjs
+>node -v
+>npm -v
+
+download and install VScode
+change terminal to "Command prompt" type :
+	- file -> preferences -> search : terminal.integrated.defaultProfile.windows
+	-> change to Command prompt
+----------------------------------
+
+create node project
+>npm init -y
+
+run project
+>node fileName.ext
+>node index.js
+
+
+install nodemon locally
+>npm install --save-dev nodemon
+
+install nodemon globally
+>npm install -g nodemon
+
+run project by nodemon
+>nodemon app.js
+
+we can change package.json by adding
+"scripts": {
+  "start": "node app.js",
+  "dev": "nodemon app.js"
+}
+then run project by
+>npm run dev
+
+stop nodemon in terminal by : ctrl+c
+
+-----------------------------------
+
+non-blocking concept :
+
+console.log("Hello, World!");
+
+const fs = require('fs');
+
+fs.readFile("file.txt", (err, data) => {
+  if (err) throw err;
+  console.log("File has been read");
+});
+
+console.log("This runs while file is being read");
+
+-------------------------------------
+
+import file to our code.
+
+Modules: 
+    - core (dependency)
+    - npm packages
+    - local modules
+
+- core (dependency) importing ex:
+	const fs = require('fs');
+	const path = require('path');
+	const http = require('http');
+
+- npm packages importing ex:
+	install using npm >npm install express
+	import it in code :
+		const express = require('express');
+
+- local modules:
+	the module opSum.js :
+		const sum = (a, b) => {
+    			return a + b;
+		}
+		module.exports = {
+    			"summation" : sum
+		}
+	
+	import in a file
+		const sum01 = require("./opSum");
+		console.log(sum01.summation(11111, 33));
+
+
+*** we can use import for : core, npm, local modules also
+	import fs from 'fs';
+	import express from 'express';
+	import myUtils from './opSum.js'; 
+
+----------
+ex for local
+	the module opSum.js :
+		const sum = (a, b) => {
+    			return a + b;
+		}
+		export const summation = sum;
+	
+	import in a file
+		import { summation } from "./opSum.js";
+		console.log(summation(3, 33));
+	
+----------------------------------------------------
+
+homework
+- write a module that got a date and return it in arabic format
+	ex: الخميس 07 أغسطس 2025
+
+
+
