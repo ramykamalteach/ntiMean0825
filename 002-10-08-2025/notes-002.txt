@@ -52,3 +52,6 @@ ex for local
 	ex: الخميس 07 أغسطس 2025
         - in the same module create functions get day and month in arabic, then import them indvidaully in the main code
         
+		const date = new Date('2025-08-10');
+		const dayOfWeek = date.getDay();
+		let month = d.getMonth();
