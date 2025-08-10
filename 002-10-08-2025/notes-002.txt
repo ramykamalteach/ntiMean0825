@@ -1,0 +1,54 @@
+import file to our code.
+
+Modules: 
+    - core (dependency)
+    - npm packages
+    - local modules
+
+- core (dependency) importing ex:
+	const fs = require('fs');
+	const path = require('path');
+	const http = require('http');
+
+- npm packages importing ex:
+	install using npm >npm install express
+	import it in code :
+		const express = require('express');
+
+- local modules:
+	the module opSum.js :
+		const sum = (a, b) => {
+    			return a + b;
+		}
+		module.exports = {
+    			"summation" : sum
+		}
+	
+	import in a file
+		const sum01 = require("./opSum");
+		console.log(sum01.summation(11111, 33));
+
+
+*** we can use import for : core, npm, local modules also
+	import fs from 'fs';
+	import express from 'express';
+	import myUtils from './opSum.js'; 
+
+----------
+ex for local
+	the module opSum.js :
+		const sum = (a, b) => {
+    			return a + b;
+		}
+		export const summation = sum;
+	
+	import in a file
+		import { summation } from "./opSum.js";
+		console.log(summation(3, 33));
+	
+----------------------------------------------------
+
+- write a module that got a date and return it in arabic format
+	ex: الخميس 07 أغسطس 2025
+        - in the same module create functions get day and month in arabic, then import them indvidaully in the main code
+        
