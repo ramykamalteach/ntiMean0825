@@ -1,5 +1,7 @@
+const sum01 = require("../opSum");
+
 const add = (a, b) => {
-    return a + b;
+    return sum01.summation(a, b);
 }
 const subtract = (a, b) => {
     return a - b;
