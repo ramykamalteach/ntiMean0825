@@ -1,0 +1,26 @@
+SQL database consists of :
+    - tables
+        - Fields
+            - data types
+                - int, decimal, varchar, datetime, boolean, ......
+        -Records
+    - relationships
+        - one-to-one
+        - one-to-many
+        - many-to-many
+
+----------------------------------
+
+using PHPmyAdmin :
+    - create, drop : database
+    - create, drop : table
+    - create, drop fields
+    
+    - browse data
+    - insert data in table
+    - delete and update data
+    
+    - import data
+    - export data
+
+

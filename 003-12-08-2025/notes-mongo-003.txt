@@ -1,0 +1,177 @@
+download xampp for windows 64 >>> 8.2.12 / PHP 8.2.12
+---------------------------------------------------------
+start mongo compass locally mongodb://localhost:27017
+
+
+Query in MongoDB :
+
+    - between query
+        {
+            "year": { "$gte": 2010, "$lte": 2015 }
+        }
+
+    - tite field contains "friend", and ignore case sensitive :
+        { "title": { "$regex": "friend", "$options": "i" } }
+    
+    - tite field starts with "friend", and ignore case sensitive :
+        { "title": { "$regex": "^friend", "$options": "i" } }
+
+    - tite field ends with "friend", and ignore case sensitive :
+        { "title": { "$regex": "friend$", "$options": "i" } }
+
+    - AND query
+        {
+            $and: [
+                { title: { "$regex": "friend", "$options": "i" } },
+                { year: { $gt: 2020 } }
+            ]
+        }
+
+    - OR query
+        {
+            $or: [
+                { title: { "$regex": "friend", "$options": "i" } },
+                { year: { $gt: 2022 } }
+            ]
+        }
+
+    - NOT query
+        {
+            $and: [
+                {year: 2023},
+                {genres: { $not: {"$regex": "western", "$options": "i"}}}
+            ]  
+        }
+
+    - nested fields
+        {
+           "address.city": "Cairo"
+        }
+
+    - find document if field exists
+        {
+            "phone": { "$exists": true }
+        }
+
+    - find document if field  is null or missing
+        {
+            "middleName": null
+        }
+
+    - or only NUll
+        {
+            "middleName": { "$type": "null" }
+        }
+
+    - Query by ObjectId
+        {
+           "_id": ObjectId("64f0a5eabc1234567890def0")
+        }
+
+    - $expr for field-to-field comparison
+        {
+            "$expr": { "$gt": ["$price", "$discount"] }
+        }
+
+
+------------------------------
+In MongoDB, an index is a data structure that improves the speed of search queries on a collection — just like an index in a book helps you quickly find a topic without reading every page.
+
+Why Use Indexes?
+Without indexes, MongoDB has to scan every document in a collection to find matches (called a collection scan), which is slow for large datasets.
+
+With an index, MongoDB can jump directly to matching documents — making queries much faster.
+
+in mongodb compass, goto to indexes tab to view and create indexes
+
+Too many indexes slow down inserts/updates — use only what you need.
+
+Indexes consume memory.
+
+Use compound indexes if you often query on multiple fields together.
+
+-----------------------------
+
+In MongoDB Compass, aggregations are a powerful way to analyze, transform, and reshape data using a pipeline of processing stages — all without writing traditional code.
+
+An aggregation pipeline is a sequence of stages. Each stage:
+    1- Takes input documents
+    2- Processes them
+    3- Passes the results to the next stage
+
+example:
+    in orders collection :
+        - add stage with type of $group
+            {
+                "_id": "$CustomerID",
+                "orderCount": { "$sum": 1 }
+            }
+        - add second stage with type of $sort
+            {
+                "orderCount": -1
+            }
+
+
+    in order collection : write TEXT of aggregation to join with customer collection :
+
+        [
+            {
+                "$lookup": {
+                "from": "customers",
+                "localField": "CustomerID",
+                "foreignField": "CustomerID",
+                "as": "customerInfo"
+                }
+            },
+            {
+                "$unwind": "$customerInfo"
+            },
+            {
+                "$project": {
+                "_id": 0,
+                "OrderID": 1,
+                "OrderDate": 1,
+                "Country": "$customerInfo.Country"
+                }
+            }
+        ]
+
+
+
+----------------------------------
+
+Simulate Relationships in MongoDB
+| Method         | Technique      | Use For                       |
+| -------------- | -------------- | ----------------------------- |
+| **Reference**  | Manual IDs     | Shared or large related data  |
+| **Embedding**  | Nest documents | Related data used only here   |
+| **\$lookup**   | Aggregation    | Read-time joining             |
+| **populate()** | Mongoose ORM   | Simplified joining in Node.js |
+
+
+----------------------------------
+
+Schema :
+    In MongoDB Compass, a schema refers to the inferred structure of documents in a collection — even though MongoDB is schema-less, Compass helps you visually analyze and understand your data's structure.
+
+-----------------------------------
+
+Validation :
+    In MongoDB Compass, the Validation tab allows you to define rules (a schema) that MongoDB will use to validate documents before they are inserted or updated in a collection.
+
+
+
+-------------------------------------------------------------------------
+
+Homework :
+    - in Wuzzuf_Jobs dataset, use mongo compass to get that :
+        - jobs that requires "photoshop"
+        - jobs that requires "entery level"
+        - jobs that requires 3 years exp or more
+        - jobs outside "cairo" and "Giza"
+
+        - order first 33 company that had required more jobs
+
+        - what are the most required job title
+        - what are the most required job level
+        - where is job location most repeated
