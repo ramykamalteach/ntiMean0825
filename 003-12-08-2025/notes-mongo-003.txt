@@ -92,7 +92,11 @@ Use compound indexes if you often query on multiple fields together.
 
 -----------------------------
 
-In MongoDB Compass, aggregations are a powerful way to analyze, transform, and reshape data using a pipeline of processing stages — all without writing traditional code.
+In MongoDB Compass, aggregations are a powerful way to
+    -analyze
+    -transform
+    -reshape data
+    using a pipeline of processing stages — all without writing traditional code.
 
 An aggregation pipeline is a sequence of stages. Each stage:
     1- Takes input documents

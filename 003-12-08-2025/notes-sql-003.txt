@@ -3,7 +3,7 @@ SQL database consists of :
         - Fields
             - data types
                 - int, decimal, varchar, datetime, boolean, ......
-        -Records
+        - Records
     - relationships
         - one-to-one
         - one-to-many
