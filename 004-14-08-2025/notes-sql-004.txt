@@ -32,7 +32,9 @@ Main commands used to work with data in a table :
 >>> INSERT INTO TABLE(field01, field02, .....) VALUES (value of field01, value of field02, .....)
 
 EX: 
+>>> INSERT INTO `categories`(`CategoryID`, `CategoryName`, `Description`) VALUES (NULL, 'clothes','men, women, children clothes')
 
+>>> INSERT INTO `categories`(`CategoryName`, `Description`) VALUES ('clothes','men, women, children clothes')
 
 
 
@@ -42,7 +44,7 @@ EX:
 >>> UPDATE TABLE SET field01=value01, field02=value02, ..... WHERE condition(s)
 
 EX:
-
+>>> UPDATE `categories` SET `CategoryName`='أحذية ومنتجات جلدية',`Description`='أحذية أطفال وكبار وشنط' WHERE `CategoryID`=10
 
 
 ---------------------
@@ -51,7 +53,7 @@ EX:
 >>> DELETE FROM TABLE WHERE condition(s)
 
 EX:
-
+>>> DELETE FROM `categories` WHERE `CategoryID`=9
 
 --------------------
 4- SELECT : Used to retrieve data from a table(S).
@@ -70,9 +72,13 @@ EX:
 
 EX:
 
+>>> SELECT * FROM `products` ORDER BY `products`.`UnitPrice`
 
+>>> SELECT `ProductID`,`ProductName`,`UnitPrice` FROM `products` WHERE 1 ORDER BY `ProductName` DESC;
 
+>>> SELECT `EmployeeID`,`FirstName` FROM `employees` WHERE `FirstName` LIKE '%an%';
 
+>>> SELECT `EmployeeID`,`FirstName` FROM `employees` WHERE `FirstName` LIKE 'an%';
 
 
 
