@@ -1,0 +1,80 @@
+SQL relationships
+In SQL, we create relationships to connect data stored in different tables so it can work together in a logical and consistent way.
+
+Why we create relationships:
+
+1. Avoid Data Duplication (Normalization)
+Instead of storing the same information multiple times, we put it in one place and link to it.
+
+2. Maintain Data Consistency (Integrity)
+If a customer changes their phone number, we update it in one table, and all related data stays correct.
+
+3. Make Queries Easier and More Powerful
+Relationships allow us to JOIN tables to get combined information.
+
+4. Reflect Real-World Structure
+In the real world, things are related — customers place orders, orders contain products, products belong to categories.
+
+5. Improve Performance
+When data is well-structured in related tables, queries can run faster and indexes work better than in one huge, repetitive table.
+
+------------------------------------------------------
+
+Main commands used to work with data in a table :
+    - INSERT
+    - UPDATE 
+    - DELETE 
+    - SELECT
+
+-------------------
+1- INSERT : Used to add new rows(records) to a table.
+
+>>> INSERT INTO TABLE(field01, field02, .....) VALUES (value of field01, value of field02, .....)
+
+EX: 
+
+
+
+
+---------------------
+2- UPDATE : Used to modify existing rows(records).
+
+>>> UPDATE TABLE SET field01=value01, field02=value02, ..... WHERE condition(s)
+
+EX:
+
+
+
+---------------------
+3- DELETE : Used to delete rows(records) from a table.
+
+>>> DELETE FROM TABLE WHERE condition(s)
+
+EX:
+
+
+--------------------
+4- SELECT : Used to retrieve data from a table(S).
+
+    - comparison operators : >  <  >=  <=   =   <>
+
+    - ORDER BY
+
+    - logic operations : AND, OR, NOT, BETWEEN, IN, LIKE, IS NULL, IS NOT NULL
+
+    - aggregate functions : MIN, MAX. COUNT, AVG, SUM
+    
+    - relationships with SELECT
+
+    - GROUP BY, HAVING
+
+EX:
+
+
+
+
+
+
+
+
+

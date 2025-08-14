@@ -170,12 +170,53 @@ Validation :
 Homework :
     - in Wuzzuf_Jobs dataset, use mongo compass to get that :
         - jobs that requires "photoshop"
-        - jobs that requires "entery level"
+        - jobs that requires "entry level"
         - jobs that requires 3 years exp or more
+
+    >>> { "YearsExp": { "$regex": "^[3-9]|^\\d{2,}", "$options": "i" } }
+    >>> { "YearsExp": { "$regex": "3|\\+", "$options": "i" } }		// 2572 document
+    >>> {"YearsExp": {"$regex": "^[3-9]|^[1-9]\\d|\\d{3,}"}}
+   
+
         - jobs outside "cairo" and "Giza"
 
         - order first 33 company that had required more jobs
+        [
+            {
+                $group: {
+                _id: "$Company",
+                orderCount: { $sum: 1 }
+                }
+            },
+            {
+                $sort: {
+                orderCount: -1
+                }
+            },
+            {
+                $limit: 33
+            }
+        ]
+
 
         - what are the most required job title
+            [
+                {
+                    $group: {
+                    _id: "$Title",
+                    orderCount: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: {
+                    orderCount: -1
+                    }
+                },
+                {
+                    $limit: 1000
+                }
+            ]
+
+
         - what are the most required job level
         - where is job location most repeated
