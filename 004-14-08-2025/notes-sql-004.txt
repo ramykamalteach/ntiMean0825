@@ -80,7 +80,12 @@ EX:
 
 >>> SELECT `EmployeeID`,`FirstName` FROM `employees` WHERE `FirstName` LIKE 'an%';
 
+>>> SELECT `ProductID`,`ProductName`,`UnitPrice` FROM `products` WHERE `UnitPrice` BETWEEN 53 AND 100;
+
+>>> SELECT `SupplierID`,`CompanyName`,`Country` FROM `suppliers` WHERE `Country` IN('JAPAN', 'ITALY', 'SPAIN');
 
 
+>>> SELECT `CompanyName`,`HomePage` FROM `suppliers` WHERE `HomePage` IS NOT NULL;
+>>> SELECT `CompanyName`,`HomePage` FROM `suppliers` WHERE `HomePage` IS NULL;
 
 
