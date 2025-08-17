@@ -36,6 +36,15 @@
     >>> SELECT `Country`, COUNT(`SupplierID`) AS SupppliersCount FROM `suppliers` GROUP BY `Country` HAVING `SupppliersCount` >= 3;
 
 
-    
+
 
     - relationships with SELECT
+        >>> SELECT `categories`.`CategoryName`, `products`.`ProductName` FROM `categories`, `products` WHERE `categories`.`CategoryID` = `products`.`CategoryID` ORDER BY `categories`.`CategoryID`;
+
+        >>> SELECT `categories`.`CategoryName`, `products`.`ProductName`, `order details`.`UnitPrice`, `order details`.`Quantity` FROM `categories`, `products`,`order details` WHERE `categories`.`CategoryID` = `products`.`CategoryID` AND `products`.`ProductID` = `order details`.`ProductID` AND `order details`.`OrderID` = 10248;
+
+        >>> SELECT `order details`.`OrderID`, `customers`.`CompanyName`, `orders`.`OrderDate`, SUM(`order details`.`UnitPrice` * `order details`.`Quantity`) AS orderTotal FROM `order details`, `orders`, `customers` WHERE `customers`.`CustomerID` = `orders`.`CustomerID` AND `orders`.`OrderID` = `order details`.`OrderID` AND `order details`.`OrderID` = 10248 GROUP BY `order details`.`OrderID`;
+
+        >>> SELECT `order details`.`OrderID`, `customers`.`CompanyName`, `orders`.`OrderDate`, SUM(`order details`.`UnitPrice` * `order details`.`Quantity`) AS orderTotal FROM `order details`, `orders`, `customers` WHERE `customers`.`CustomerID` = `orders`.`CustomerID` AND `orders`.`OrderID` = `order details`.`OrderID` GROUP BY `order details`.`OrderID`;
+
+        
