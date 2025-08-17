@@ -1,0 +1,45 @@
+new nodejs project
+    > npm init -y
+    > npm i nodemon
+    > nodemon app.js
+
+
+Install express 5:
+    > npm i express@5
+
+open url
+    localhost:3000
+    localhost:3000/nti
+
+code :
+    const express = require('express')
+    const app = express()
+
+    app.get('/', (req, res) => {
+        res.send('Hello World!')
+    })
+    app.get('/nti', (req, res) => {
+        res.send('welcome in NTI')
+    })
+
+    const port = 3000
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`)
+    })
+
+to add html page as a view
+    istall path
+    > npm i path
+
+    code :
+        const path = require('path');
+        app.get('/x', (req, res) => {
+            res.sendFile(path.join(__dirname, '/contacts.html'));
+        });
+
+        **** add contacts.html file in project root directory
+        **** add public directory in project root directory
+        **** in public directory add site.css file
+        **** in contacts.html file add
+                <link rel="stylesheet" href="/site.css">
+                

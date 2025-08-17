@@ -1,0 +1,12 @@
+4- SELECT : Used to retrieve data from a table(S).
+    ....
+
+    - logic operations : AND, OR, NOT
+
+    - calculated Fields
+
+    - aggregate functions : MIN, MAX. COUNT, AVG, SUM
+    
+    - relationships with SELECT
+
+    - GROUP BY, HAVING
