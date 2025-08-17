@@ -47,4 +47,12 @@
 
         >>> SELECT `order details`.`OrderID`, `customers`.`CompanyName`, `orders`.`OrderDate`, SUM(`order details`.`UnitPrice` * `order details`.`Quantity`) AS orderTotal FROM `order details`, `orders`, `customers` WHERE `customers`.`CustomerID` = `orders`.`CustomerID` AND `orders`.`OrderID` = `order details`.`OrderID` GROUP BY `order details`.`OrderID`;
 
-        
+
+        >>> SELECT `order details`.`OrderID`, `customers`.`CompanyName`, `orders`.`OrderDate`, SUM(`order details`.`UnitPrice` * `order details`.`Quantity`) AS ordersTotal FROM `order details`, `orders`, `customers` WHERE `customers`.`CustomerID` = `orders`.`CustomerID` AND `orders`.`OrderID` = `order details`.`OrderID` GROUP BY `customers`.`CustomerID` ORDER BY `customers`.`CustomerID`;
+
+
+
+        homework :
+        - calculate every order total with product discount field
+        - how much total procducts price every ship company made ?
+        - how many orders every ship company made ?
