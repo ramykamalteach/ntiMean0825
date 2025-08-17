@@ -3,10 +3,39 @@
 
     - logic operations : AND, OR, NOT
 
+        >>> SELECT `CompanyName`,`Country`,`City` FROM `customers` WHERE `Country`='germany' AND `City`='berlin'
+
+        >>> SELECT `ProductName`,`UnitPrice`,`UnitsInStock` FROM `products` WHERE NOT(`UnitPrice` > 100 AND `UnitsInStock` = 0);
+
+        >>> SELECT `CompanyName`,`Country` FROM `suppliers`
+            WHERE `CompanyName` LIKE 's%' AND NOT(`Country` = 'usa' OR `Country` = 'uk')
+
+        >>> SELECT `CompanyName`,`Country` FROM `suppliers` WHERE `CompanyName` LIKE 's%' AND `Country` NOT IN('usa','uk');
+
+
+
     - calculated Fields
 
-    - aggregate functions : MIN, MAX. COUNT, AVG, SUM
-    
-    - relationships with SELECT
+        >>> SELECT `ProductName`,`UnitPrice`,`UnitsInStock`, (`UnitPrice` * `UnitsInStock`) AS productTotal FROM `products` WHERE 1;
 
-    - GROUP BY, HAVING
+        >>> SELECT CONCAT(`TitleOfCourtesy`, ' ', `FirstName`, ' ', `LastName`, ' - ', `Title`) AS empName FROM `employees` WHERE 1;
+
+
+
+    - aggregate functions : MIN, MAX, COUNT, AVG, SUM
+                            - GROUP BY, HAVING
+
+    >>> SELECT `ProductName`, MAX(`UnitPrice`) AS maxPrice FROM `products` WHERE 1;
+
+    >>> SELECT `Country`, COUNT(`SupplierID`) AS SupppliersCount FROM `suppliers` GROUP BY `Country`;
+
+    >>> SELECT `Country`, COUNT(`SupplierID`) AS SupppliersCount FROM `suppliers` GROUP BY `Country` HAVING `Country` = 'usa';
+
+    >>> SELECT `Country`, COUNT(`SupplierID`) AS SupppliersCount FROM `suppliers` WHERE `Country` = 'usa' GROUP BY `Country`;
+
+    >>> SELECT `Country`, COUNT(`SupplierID`) AS SupppliersCount FROM `suppliers` GROUP BY `Country` HAVING `SupppliersCount` >= 3;
+
+
+    
+
+    - relationships with SELECT
