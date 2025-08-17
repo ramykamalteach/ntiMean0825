@@ -40,6 +40,10 @@ to add html page as a view
         **** add contacts.html file in project root directory
         **** add public directory in project root directory
         **** in public directory add site.css file
+        **** add in code 
+
+            app.use(express.static(path.join(__dirname, "public")));
+
         **** in contacts.html file add
                 <link rel="stylesheet" href="/site.css">
                 
