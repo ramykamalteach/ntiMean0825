@@ -1,0 +1,238 @@
+Build MVC
+
+1- folders architecture :
+    - root
+        - controllers
+        - models
+        - views
+            - partials
+            - pages
+        - route
+        - public
+
+2- folders/files architecture :
+    - root
+        - controllers
+            - staffController.js
+        - models
+            - staffModel.js
+        - views
+            - partials
+                - siteHeader.ejs
+                - siteFooter.ejs
+            - pages
+                - home.ejs
+                - staff.ejs
+        - route
+            - web.js
+        - public
+            - siteStyles.css
+        
+        - index.js
+        - .env
+
+
+3- install packages
+    > npm init -y
+    > npm i nodemon
+    > npm i express@5
+    > npm i path
+    > npm i dotenv
+    > npm i ejs -g
+
+
+--------------------
+
+index.js code :
+
+const express = require('express');
+const app = express();
+const path = require('path');
+require('dotenv').config();
+
+/* ------------- public folder ---------------- */
+app.use(express.static(__dirname + '/public'));
+/* ------------- view engine ------------------ */
+app.set('view engine', 'ejs');
+
+/* ------------- router ----------------------- */
+const webRouter = require('./route/web');
+app.use(webRouter);
+
+/* ---------------- start server --------------- */
+port = process.env.PORT;
+app.listen(port, () => {
+    //
+    console.log("server start at port " + port);
+});
+
+-----------------
+
+.env code :
+
+PORT=3001
+DATABASE_NAME=school
+
+
+-----------------
+
+the router web.js code :
+
+const express = require('express');
+const webRouter = express.Router();
+
+/* ------------- controllers ------------------- */
+const staffController = require('../controllers/staffController');
+/* -------------- route roles ------------------------ */
+webRouter.get('/', (req, res) => {
+    res.render('pages/home');
+});
+
+webRouter.get('/staff', (req, res) => {
+    webRouter.get('/staff', staffController(req, res));
+});
+
+// add more route roles
+
+module.exports = webRouter;
+
+
+----------------------
+
+staffController.js code :
+
+const staffModel = require('../models/staffModel');
+
+const staffController = (req, res) => {    
+    res.render('pages/staff', {
+        depName: staffModel().staffTitle,
+        staffCount: staffModel().staffCount,
+        emps: staffModel().emps
+    });
+}
+
+module.exports = staffController;
+
+
+------------------------
+
+staffModel.js code :
+
+const staffModel = () => {
+    return {
+        staffTitle : "Mean Full Stack Staff",
+        staffCount : 15,
+        emps : [
+            { name: "Ali Reda", job: "frontend" },
+            { name: "Waleed Mohammed", job: "backtend", address: "mansoura" },
+            { name: "FAthy Farouk", job: "AI-dev" },
+        ]
+    };
+}
+
+module.exports = staffModel;
+
+------------------------
+
+siteStyle.css code :
+
+body {
+    border: 3px red solid;
+    margin: 0 5%;
+    padding: 0 5%;
+}
+
+----------------------
+
+home.ejs
+
+
+    <%- include('../partials/siteHeader', {pageTitle: "Home Page"}) %>
+
+    <h1>Home page</h1>
+
+    <%- include('../partials/siteFooter') %>
+
+
+------------------------
+
+siteHeader.ejs code :
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Site Name - <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/siteStyle.css">
+</head>
+<body>
+
+
+<h3>
+    Site Name
+    <img src="/img/logo.png" width="55" alt="">
+</h3>
+<nav>
+    <div><a href="/">Home page</a></div>
+    <div><a href="staff">Our Staff</a></div>
+</nav>
+<hr>
+
+--------------------- 
+
+siteFooter.ejs code : 
+
+<footer>
+    <hr>
+    <h3>
+        copyrights &copy; reserved 2024
+    </h3>
+</footer>
+
+</body>
+</html>
+
+
+-----------------------------
+
+staff.ejs code :
+
+
+<%- include('../partials/siteHeader', {pageTitle: "Staff Page"}) %>
+
+<h1>
+    <%= depName %>
+</h1>
+<h3>
+    <%= staffCount %> Employees
+</h3>
+
+<% emps.forEach((oneEmp) => { %>
+    <li>
+        <%- include('../partials/emp', { oneEmp: oneEmp}) %>
+    </li>
+<% }); %>
+
+<%- include('../partials/siteFooter') %>
+
+------------------------
+
+emp.ejs code :
+
+<b><%= oneEmp.name %></b>
+<br>
+- <%= oneEmp.job %>
+<br>
+- address :
+<% if(oneEmp.address === undefined){ %>
+    <em>emp has no address</em>
+<% }
+else{ %>
+    <em><%= oneEmp.address %></em>
+<% } %>
+
+<hr>
+
