@@ -1,0 +1,13 @@
+<b><%= oneEmp.name %></b>
+<br>
+- <%= oneEmp.job %>
+<br>
+- address :
+<% if(oneEmp.address === undefined){ %>
+    <em>emp has no address</em>
+<% }
+else{ %>
+    <em><%= oneEmp.address %></em>
+<% } %>
+
+<hr>

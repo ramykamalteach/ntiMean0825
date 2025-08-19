@@ -1,0 +1,16 @@
+<%- include('../partials/siteHeader', {pageTitle: "Staff Page"}) %>
+
+<h1>
+    <%= depName %>
+</h1>
+<h3>
+    <%= staffCount %> Employees
+</h3>
+
+<% emps.forEach((oneEmp) => { %>
+    <li>
+        <%- include('../partials/emp', { oneEmp: oneEmp}) %>
+    </li>
+<% }); %>
+
+<%- include('../partials/siteFooter') %>

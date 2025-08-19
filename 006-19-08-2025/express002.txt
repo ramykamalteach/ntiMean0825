@@ -20,6 +20,7 @@ Build MVC
             - partials
                 - siteHeader.ejs
                 - siteFooter.ejs
+                - emp.ejs
             - pages
                 - home.ejs
                 - staff.ejs
