@@ -1,0 +1,648 @@
+Product CRUD :
+    - product has : name, weight, photo
+
+-------------------------------------------
+
+create mysql db : factory -> has products table -> id(pk), productName(vchar), weight(decimal), photo(vchar)
+
+-------------------------------------------
+
+project folders/files architecture :
+    - root
+        - controllers
+            - productController.js
+        - models
+            - productModel.js
+        - views
+            - partials
+                - siteHeader.ejs
+                - siteFooter.ejs
+            - pages
+                - products
+                    - index.ejs
+                    - createForm.ejs
+                    - show.ejs
+                    - updateForm.ejs
+        - route
+            - web.js
+        - public
+            - css
+                - siteStyles.css
+            - img
+
+        - index.js
+        - .env 
+
+-------------------------------------------
+
+install packages
+    > npm init -y
+    > npm i nodemon
+    > npm i express@5
+    > npm i path
+    > npm i dotenv
+    > npm i ejs
+    > npm i multer
+    > npm i mysql2
+
+-------------------------------------------
+
+.env code :
+
+PORT=3001
+DATABASE_HOST=localhost
+DATABASE_NAME=factory
+DATABASE_USER=root
+DATABASE_PASSWORD=
+
+-------------------------------------------
+
+index,js code :
+
+const express = require('express');
+const app = express();
+const path = require('path');
+require('dotenv').config();
+
+/* ------------- public folder ---------------- */
+app.use(express.static(__dirname + '/public'));
+/* ------------- view engine ------------------ */
+app.set('view engine', 'ejs');
+/* -------------- using form data -------------- */
+app.use(express.urlencoded({extended: true}));
+/* ------------- router ----------------------- */
+const webRouter = require('./route/web');
+app.use(webRouter);
+
+/* ---------------- start server --------------- */
+port = process.env.PORT;
+app.listen(port, () => {
+    //
+    console.log("server start at port " + port);
+});
+
+
+------------------------------------------
+
+web.js code :
+
+const express = require('express');
+const webRouter = express.Router();
+const app = express();
+
+/* ------------- controllers ------------------- */
+
+const productController = require('../controllers/productController');
+
+/* -------------- parse of form ------------------- */
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+
+const multer = require("multer");
+
+const path = require("path");
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/img/uploades/");
+    },
+    filename: (req, file, cb) => {
+        if(file){
+            cb(null, Date.now() + path.extname(file.originalname))
+        }
+    }
+});
+
+const upload = multer({
+    storage: storage
+});
+
+/* -------------- route roles ------------------------ */
+
+/* -------------------products route roles----------------------- */
+webRouter.get('/products', (req, res) => {
+    productController.index(req, res);
+});
+webRouter.get('/products/show/:id', (req, res) => {
+    productController.show(req, res);
+});
+webRouter.get('/products/createForm', (req, res) => {
+    productController.createForm(req, res);
+});
+
+/* ---****---- */
+webRouter.post('/products/store', upload.single('photo'), (req, res) => {
+    productController.store(req, res);
+});
+
+webRouter.get('/products/updateForm/:id', (req, res) => {
+    productController.updateForm(req, res);
+});
+webRouter.post('/products/update', upload.single('photo'), (req, res) => {
+    productController.update(req, res);
+});
+webRouter.get('/products/destroy/:id', (req, res) => {
+    productController.destroy(req, res);
+});
+// add more route roles
+
+
+module.exports = webRouter;
+
+
+
+-------------------------------------------------
+
+
+productController.js code :
+
+const productModel = require("../models/productModel");
+const path = require("path");
+const {unlink} = require("fs");
+
+const index = (req, res) => {
+    productModel.index()
+        .then(products => {
+            res.render("pages/products/index", { products });
+        });
+}
+
+const show = (req, res) => {
+    const id = req.params['id'];
+    productModel.show(id)
+        .then(oneProduct => {
+            res.render("pages/products/show", { oneProduct });
+        });
+}
+
+const createForm = (req, res) => {
+    res.render("pages/products/createForm");
+}
+
+const store = (req, res) => {
+   // validation
+    if(req.file != undefined) {
+        req.body.photo = req.file.filename;
+    }
+    else {
+        req.body.photo = "";
+    }
+
+   //////////////////
+   productModel.store(req.body)
+        .then(error => {
+            //
+        });
+    res.redirect("/products");
+}
+
+const updateForm = (req, res) => {
+    const id = req.params['id'];
+    productModel.updateForm(id)
+        .then(oneProduct => {
+            res.render("pages/products/updateForm", { oneProduct });
+        });
+}
+
+const update = (req, res) => {
+    // validation
+
+    const id = req.body.id;
+    productModel.updateForm(id)
+        .then(oneProduct => {
+            if(oneProduct.length != 0){
+                if(req.file != undefined){
+                    if(oneProduct[0].photo != "") {
+                        const publicPath = path.resolve("./", "public/img/uploades");
+                        unlink(path.join(publicPath, oneProduct[0].photo), (err) => {
+                            if(err) {
+                                throw err;
+                            }
+                        });
+                    }
+                    req.body.photo = req.file.filename;
+                    productModel.update(req.body)
+                        .then(error => {
+                            //
+                        });
+                    res.redirect("/products");                    
+                }
+                else {
+                    req.body.photo = "";
+                    productModel.update(req.body)
+                        .then(error => {
+                            //
+                        });
+                    res.redirect("/products");
+                }
+            }
+        });
+}
+
+const destroy = (req, res) => {
+    const id = req.params['id'];
+    productModel.updateForm(id)
+        .then(oneProduct => {
+            if(oneProduct.length != 0){                
+                if(oneProduct[0].photo != "") {
+                    const publicPath = path.resolve("./", "public/img/uploades");
+                    unlink(path.join(publicPath, oneProduct[0].photo), (err) => {
+                        if(err) {
+                            throw err;
+                        }
+                    });
+                }                    
+                productModel.destroy(id)
+                    .then(error => {
+                        //
+                    });
+                res.redirect("/products");
+            }
+        });    
+}
+
+module.exports = {
+    index,
+    show,
+    createForm,
+    store,
+    updateForm,
+    update,
+    destroy
+}
+
+
+-------------------------------------------
+
+
+productModel.js code :
+
+const mysql = require("mysql2");
+
+const connection = mysql.createPool({
+    host:process.env.DATABASE_HOST,
+    user:process.env.DATABASE_USER,
+    password:process.env.DATABASE_PASSWORD,
+    database:process.env.DATABASE_NAME
+});
+
+async function index() {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM products ORDER BY id DESC", [], (error, result) => {
+            if(!error) {
+                resolve(result);
+            }
+        })
+    });
+}
+
+async function show(id) {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM products WHERE id=?", [id], (error, result) => {
+            if(!error) {
+                resolve(result);
+            }
+        })
+    });
+}
+
+async function store(createFormData) {
+    const productName = createFormData.productName;
+    const weight = createFormData.weight;
+    const photo = createFormData.photo;
+
+    return new Promise((resolve, reject) => {
+        connection.query("INSERT INTO products (productName, weight, photo) VALUES (?,?,?)", [productName, weight, photo], (error, result) => {
+            if(error) {
+                return res.json({ err: error});
+            }
+        })
+    });
+}
+
+
+async function updateForm(id) {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM products WHERE id=?", [id], (error, result) => {
+            if(!error) {
+                resolve(result);
+            }
+        })
+    });
+}
+
+async function update(updateFormData) {
+    const id = updateFormData.id;
+    const productName = updateFormData.productName;
+    const weight = updateFormData.weight;
+    const photo = updateFormData.photo;
+
+    if(photo != "") {
+        var updateSQL = "UPDATE products SET productName=?, weight=?, photo=? WHERE id=?";
+        var updatedFields = [productName, weight, photo, id];
+    }
+    else {
+        var updateSQL = "UPDATE products SET productName=?, weight=? WHERE id=?";
+        var updatedFields = [productName, weight, id];
+    }
+
+    return new Promise((resolve, reject) => {
+        connection.query(updateSQL, updatedFields, (error, result) => {
+            if(error) {
+                return res.json({ err: error});
+            }
+        })
+    });
+}
+
+async function destroy(id) {
+    return new Promise((resolve, reject) => {
+        connection.query("DELETE FROM products WHERE id=?", [id], (error, result) => {
+            if(error) {
+                return res.json({ err: error});
+            }
+        })
+    });
+}
+
+module.exports = {
+    index,
+    show,
+    store,
+    updateForm,
+    update,
+    destroy
+}
+
+
+---------------------------------------------
+
+
+siteStyle.css code :
+
+body {
+    border: 3px red solid;
+    margin: 0 5%;
+    padding: 0 5%;
+}
+
+
+/* ------ dishes ---------------- */
+.allDishes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.oneDish {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 45%;
+}
+.dishPhoto img {
+    width: 160px;
+    border-radius: 15px;
+    margin: 0 15px;
+}
+
+/* ----------------------------- */
+table {
+    width: 77%;
+    margin: 0 auto;
+}
+tr:nth-child(odd) {
+    background-color: lightskyblue;
+}
+
+
+-------------------------------------------------
+
+
+siteHeader.ejs code :
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Site Name - <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/css/siteStyle.css">
+</head>
+<body>
+
+
+<h3>
+    Site Name
+    <img src="/img/logo.png" width="55" alt="">
+</h3>
+<nav>    
+    <div><a href="/products">Product CRUD main page</a></div>
+</nav>
+<hr>
+
+------------------------------------------------
+
+siteFooter.ejs code :
+
+<footer>
+    <hr>
+    <h3>
+        copyrights &copy; reserved 2025
+    </h3>
+</footer>
+
+</body>
+</html>
+
+
+-----------------------------------------------
+
+index.ejs code : 
+
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<a href="/products/createForm">Create New Product</a>
+
+<%if(products.length > 0){%>
+    <table border>
+        <tr>
+            <th>Product Name</th><th>weight</th><th>Operations</th>
+        </tr>    
+        <% products.forEach((oneProduct) => { %>
+            <tr>
+                <th><%= oneProduct.productName %></th>
+                <th><%= oneProduct.weight %></th>
+                <th>
+                    <a href="/products/show/<%=oneProduct.id%>">
+                        Details
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="/products/updateForm/<%=oneProduct.id%>">
+                        Update
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <!-- <a href="/products/destroy/<%=oneProduct.id%>">
+                        Delete
+                    </a> -->
+                    <span onclick="destroy(this);" productID="<%=oneProduct.id%>" style="cursor: pointer;">
+                        Delete
+                    </span>
+                </th>
+            </tr>
+        <% }); %>
+    </table>
+<%}
+else {%>
+    <h3>No products created yet !!!!</h3>
+<%}%>
+
+<script>
+    function destroy(obj){
+        if(confirm("Are You Sure you want to Delete this Product ?")) {
+            id = obj.getAttribute("productID");
+            window.location.replace("/products/destroy/" + id);
+        }        
+    }
+</script>
+
+<%- include('../../partials/siteFooter') %>
+
+
+----------------------------------------------------
+
+createForm.ejs code :
+
+
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<h3>Create New Product</h3>
+<table>
+    <tr>
+        <td>
+            <form action="./store" method="post" enctype="multipart/form-data">
+                <label for="productName">product Name</label>
+                <input type="text" name="productName" id="productName">
+                <br>
+                <label for="weight">weight</label>
+                <input type="number" name="weight" id="weight">
+                <br>
+                <label for="photo">photo</label>
+                <input type="file" name="photo" id="photo" onchange="photoPreviewFn(this);">
+                <br>
+
+                <input type="submit" value="Create New Product">
+            </form>
+        </td>
+        <td>
+            <img src="" id="photoPreview" alt="photo preview" style="max-width: 55%; max-height: 55%;">
+        </td>
+    </tr>
+</table>
+
+<script>
+    function photoPreviewFn(inputFile) {
+        var file = inputFile.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById("photoPreview").setAttribute("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+
+<%- include('../../partials/siteFooter') %>
+
+
+------------------------------------------------------
+
+
+show.ejs code :
+
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<%if(oneProduct.length > 0) {%>
+    <table border>
+        <tr>
+            <th>Product name</th>
+            <th><%= oneProduct[0].productName %></th>   <!-- oneProduct is array [0] -->
+            <th rowspan="3">
+                <img src="/img/uploades/<%=oneProduct[0].photo%>" width="250" alt="">
+            </th>
+        </tr>
+        <tr>
+            <th>Product weight</th>
+            <th><%= oneProduct[0].weight %></th>
+        </tr>
+        
+    </table>
+<%}
+else {%>
+    <h3>No product with this information !!!</h3>
+<%}%>
+
+
+<%- include('../../partials/siteFooter') %>
+
+
+----------------------------------------------------
+
+
+updateForm.ejs code :
+
+
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<h3>Edit Product</h3>
+
+<table>
+    <tr>
+        <td>
+            <form action="../update" method="post" enctype="multipart/form-data">
+                <label for="productName">product Name</label>
+                <input type="text" name="productName" id="productName" value="<%= oneProduct[0].productName %>">
+                <br>
+                <label for="weight">weight</label>
+                <input type="number" name="weight" id="weight" value="<%= oneProduct[0].weight %>">
+                <br>
+                <label for="photo">photo</label>
+                <input type="file" name="photo" id="photo" onchange="photoPreviewFn(this);">
+                <br>
+
+                <input type="hidden" name="id" value="<%= oneProduct[0].id %>">
+
+                <input type="submit" value="Update Product">
+            </form>
+        </td>
+        <td>
+            <img src="/img/uploades/<%=oneProduct[0].photo%>" id="photoPreview" alt="photo preview" style="max-width: 55%; max-height: 55%;">
+        </td>
+    </tr>
+</table>
+
+<script>
+    function photoPreviewFn(inputFile) {
+        var file = inputFile.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById("photoPreview").setAttribute("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+
+<%- include('../../partials/siteFooter') %>
+
+
