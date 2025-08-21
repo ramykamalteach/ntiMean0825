@@ -58,7 +58,7 @@ DATABASE_PASSWORD=
 
 -------------------------------------------
 
-index,js code :
+index.js code :
 
 const express = require('express');
 const app = express();
