@@ -29,9 +29,10 @@ project folders/files architecture :
             - css
                 - siteStyles.css
             - img
+                - uploades
 
         - index.js
-        - .env 
+        - .env
 
 -------------------------------------------
 
