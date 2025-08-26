@@ -1,0 +1,59 @@
+<%- include('../../partials/siteHeader', {pageTitle: "One Movie Show Page" }) %>
+
+    <%if(oneMovie[0] && oneMovie[0]) {%>
+
+        <div class="movie-details">
+            <!-- Left Column: Info -->
+            <div class="movie-info">
+                <div class="movie-title">
+                    <%= oneMovie[0].title %>
+                </div>
+                <div class="movie-year">
+                    <%= oneMovie[0].year %>
+                </div>
+
+                <div class="movie-section">
+                    <h3>Cast:</h3>
+                    <ul>
+                        <% oneMovie[0].cast.forEach((actor)=> { %>
+                            <li>
+                                <%= actor %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+
+                <div class="movie-section">
+                    <h3>Genres:</h3>
+                    <ul>
+                        <% oneMovie[0].genres.forEach((genre) => { %>
+                            <li>
+                                <%= genre %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column: Poster -->
+            <div class="movie-poster">                
+                <% if(oneMovie[0].thumbnail) { %>
+                    <img src="<%= oneMovie[0].thumbnail %>" alt="Movie Poster">
+                <% } else { %>
+                        <img src="/img/noThum.jpg" alt="No Image Available">
+                <% } %>
+            </div>
+        </div>
+
+
+        <%} else {%>
+            <h3>No Movie with this information !!!</h3>
+        <%}%>
+
+
+        <h3 style="text-align: center;">
+            <a href="/movies">Back to Movies Home</a>
+        </h3>
+                
+        
+<%- include('../../partials/siteFooter') %>
