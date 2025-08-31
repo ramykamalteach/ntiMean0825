@@ -1,0 +1,76 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Movies Page" }) %>
+
+    <div class="search-wrap">
+        <form class="search-bar" action="/movies" method="post">
+            <div class="search-group">
+                <label class="sr-only" for="searchText">Search</label>
+                <input class="search-input" type="text" id="searchText" name="searchText"
+                    placeholder="Search movies or actors..." required />
+
+                <label class="sr-only" for="searchType">Search type</label>
+                <select class="search-select" id="searchType" name="searchType">
+                    <option value="title">Movie Title</option>
+                    <option value="actor">Actor</option>
+                </select>
+            </div>
+
+            <button class="search-button" type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- --------------------- search buttons genres ------------------------------- -->
+
+    <div class="genre-buttons">
+        <a href="/movies/action" class="genre-button">Action</a>
+        <a href="/movies/drama" class="genre-button">Drama</a>
+        <a href="/movies/comedy" class="genre-button">Comedy</a>
+        <a href="/movies/Science Fiction" class="genre-button">Sci-Fi</a>
+        <a href="/movies/horror" class="genre-button">Horror</a>
+    </div>
+
+    <!-- --------------------- search buttons  ------------------------------- -->
+
+    <div class="genre-buttons">
+        <a href="/movies?actor=tom&year=2000" class="genre-button">Tom movies in 2000</a>
+        <a href="/movies?year=2019" class="genre-button">Movies in 2019</a>
+        <a href="/movies?actor=bill" class="genre-button">Bill's movies</a>
+    </div>
+
+    <!-- ------------------ search result --------------------------------------- -->
+
+    <%if(movies && movies.length> 0){%>
+
+        <div class="movies-container">
+
+            <% movies.forEach((oneMovie)=> { %>
+
+                <a href="/movies/show/<%=oneMovie.id%>" class="movie-link">
+                    <div class="movie-card">
+                        <% if(oneMovie.thumbnail) { %>
+                            <img src="<%= oneMovie.thumbnail %>" alt="Movie Poster">
+                        <% } else { %>
+                                <img src="/img/noThum.jpg" alt="No Image Available">
+                        <% } %>
+
+                                    <div class="movie-info">
+                                        <div class="movie-title">
+                                            <%= oneMovie.title %>
+                                        </div>
+                                        <div class="movie-actor">
+                                            <%= oneMovie.cast[0] %>
+                                        </div>
+                                    </div>
+                    </div>
+                </a>
+
+
+                <% }); %>
+
+        </div>
+
+        <%} else {%>
+            <h3>No movies created yet !!!!</h3>
+        <%}%>
+
+
+                <%- include('../../partials/siteFooter') %>

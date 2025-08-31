@@ -1,0 +1,23 @@
+Authentication and Authorization
+
+Authentication : login (prove you are who you say you are)
+Authorization  : permissions (what you’re allowed to do once inside)
+
+-------------------------------------------------------------------------
+
+> npm i express-session
+
+in index.js
+
+const session = require("express-session");
+
+app.use(session({
+    secret: 'thisismyapplicationtoday',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24 * 3, // three days to be expired
+    }
+}));
+
