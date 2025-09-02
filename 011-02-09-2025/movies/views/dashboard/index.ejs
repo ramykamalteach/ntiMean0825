@@ -1,0 +1,31 @@
+<%- include('./partials/headerLayout.ejs', {pageName: "Dishes Page", pathLevel: "/"}) %>
+
+<!-- Blank Start -->
+<div class="col-sm-12 col-xl-12 pt-4 px-4">
+    <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
+        <div class="col-xl-12 text-center">
+            <h3>Home Page</h3>
+
+            <% if (msg) { %>
+                <div class="alert-warning">
+                    <%= msg %>
+                </div>
+            <% } %>
+
+            
+            <a href="/dashboard/manageAccounts" class="btn btn-success py-3 px-5 me-3">
+                Manage Accounts
+            </a>
+
+            <a href="/dashboard/changePassword" class="btn btn-primary py-3 px-5 me-3">
+                change password
+            </a>
+            
+        </div>
+    </div>
+</div>
+<!-- Blank End -->
+
+
+
+<%- include('./partials/footerLayout.ejs', { pathLevel: "/"}) %>

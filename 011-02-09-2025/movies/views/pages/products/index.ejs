@@ -1,0 +1,47 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<a href="/products/createForm">Create New Product</a>
+
+<%if(products.length > 0){%>
+    <table border>
+        <tr>
+            <th>Product Name</th><th>weight</th><th>Operations</th>
+        </tr>    
+        <% products.forEach((oneProduct) => { %>
+            <tr>
+                <th><%= oneProduct.productName %></th>
+                <th><%= oneProduct.weight %></th>
+                <th>
+                    <a href="/products/show/<%=oneProduct.id%>">
+                        Details
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="/products/updateForm/<%=oneProduct.id%>">
+                        Update
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <!-- <a href="/products/destroy/<%=oneProduct.id%>">
+                        Delete
+                    </a> -->
+                    <span onclick="destroy(this);" productID="<%=oneProduct.id%>" style="cursor: pointer;">
+                        Delete
+                    </span>
+                </th>
+            </tr>
+        <% }); %>
+    </table>
+<%}
+else {%>
+    <h3>No products created yet !!!!</h3>
+<%}%>
+
+<script>
+    function destroy(obj){
+        if(confirm("Are You Sure you want to Delete this Product ?")) {
+            id = obj.getAttribute("productID");
+            window.location.replace("/products/destroy/" + id);
+        }        
+    }
+</script>
+
+<%- include('../../partials/siteFooter') %>

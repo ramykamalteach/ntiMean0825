@@ -1,0 +1,54 @@
+<%- include('../partials/headerLayout.ejs', {pageName: "Manage Accounts" , pathLevel: "../" }) %>
+
+    <!-- Blank Start -->
+    <div class="col-sm-12 col-xl-12  p-4">
+
+        <% if (msg) { %>
+            <div class="alert-warning">
+                <%= msg %>
+            </div>
+        <% } %>
+
+        <a href="/dashboard/createAccountForm" class="btn btn-success my-4 py-3 px-5 me-3">
+            Create Account
+        </a>
+
+        <%if(users.length > 0){%>
+
+                <table class="table table-striped py-4">
+                    <thead>
+                        <tr style="background: none;">                            
+                            <th scope="col">Full Name</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">User Role</th>
+                            <th scope="col">Activation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                <% users.forEach((oneUser)=> { %>
+                    <tr>
+                        <th><%=oneUser.fullname%></th>
+                        <td><%=oneUser.username%></td>
+                        <td><%=oneUser.userRole%></td>
+                        <td>
+                            <% if(oneUser.isActive) { %>
+                                <a class="btn btn-success" href="/dashboard/accountActivation?userID=<%=oneUser._id%>&status=active">Active</a>
+                            <% } else { %>
+                                <a class="btn btn-danger" href="/dashboard/accountActivation?userID=<%=oneUser._id%>&status=inactive">Inactive</a>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>                        
+                    </tbody>
+                </table>
+        <%} else {%>
+            <h3>No Users created yet !!!!</h3>
+        <%}%>
+
+
+    </div>
+    <!-- Blank End -->
+
+
+
+    <%- include('../partials/footerLayout.ejs', { pathLevel: "../" }) %>

@@ -1,0 +1,12 @@
+
+today we will add to movie project
+
+in Admin :
+	- change password
+	- create / activate / deactivate users
+	- accept / reject movies
+
+in Users :
+	- change password
+	- create movie
+	- modify movie

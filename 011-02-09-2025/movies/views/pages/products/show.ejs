@@ -1,0 +1,24 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<%if(oneProduct.length > 0) {%>
+    <table border>
+        <tr>
+            <th>Product name</th>
+            <th><%= oneProduct[0].productName %></th>   <!-- oneProduct is array [0] -->
+            <th rowspan="3">
+                <img src="/img/uploades/<%=oneProduct[0].photo%>" width="250" alt="">
+            </th>
+        </tr>
+        <tr>
+            <th>Product weight</th>
+            <th><%= oneProduct[0].weight %></th>
+        </tr>
+        
+    </table>
+<%}
+else {%>
+    <h3>No product with this information !!!</h3>
+<%}%>
+
+
+<%- include('../../partials/siteFooter') %>
