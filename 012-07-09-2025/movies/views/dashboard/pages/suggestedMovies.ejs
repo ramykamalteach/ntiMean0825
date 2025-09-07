@@ -1,0 +1,46 @@
+<%- include('../partials/headerLayout.ejs', {pageName: "Review Movies" , pathLevel: "../" }) %>
+
+    <!-- Blank Start -->
+    <div class="col-sm-12 col-xl-12  p-4">
+
+        <% if (msg) { %>
+            <div class="alert-warning">
+                <%= msg %>
+            </div>
+        <% } %>
+
+        <%if(movies.length > 0){%>
+
+                <table class="table table-striped py-4">
+                    <thead>
+                        <tr style="background: none;">                            
+                            <th scope="col">Movie Title</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Editor</th>
+                            <th scope="col">View Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                <% movies.forEach((oneMovie)=> { %>
+                    <tr>
+                        <th><%=oneMovie.title%></th>
+                        <td><%=oneMovie.year%></td>
+                        <td><%=oneMovie.createdBy.fullname%></td>
+                        <td>
+                            <a class="btn btn-warning" href="/dashboard/viewMovieDetails?movieID=<%=oneMovie._id%>">View Details</a>                            
+                        </td>
+                    </tr>
+                <% }); %>                        
+                    </tbody>
+                </table>
+        <%} else {%>
+            <h3>No Movies under Review Now !!!!</h3>
+        <%}%>
+
+
+    </div>
+    <!-- Blank End -->
+
+
+
+    <%- include('../partials/footerLayout.ejs', { pathLevel: "../" }) %>

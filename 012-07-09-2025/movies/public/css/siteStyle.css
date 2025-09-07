@@ -1,0 +1,312 @@
+body {
+    border: 3px red solid;
+    margin: 0 5%;
+    padding: 0 5%;
+}
+
+
+/* ------ dishes ---------------- */
+.allDishes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.oneDish {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 45%;
+}
+.dishPhoto img {
+    width: 160px;
+    border-radius: 15px;
+    margin: 0 15px;
+}
+
+/* ----------------------------- */
+table {
+    width: 77%;
+    margin: 0 auto;
+}
+tr:nth-child(odd) {
+    background-color: lightskyblue;
+}
+
+
+/* ---------------- movies ------------------ */
+
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* allow multiple rows */
+  gap: 20px;
+  /* spacing between cards */
+  justify-content: space-between;
+  /* center rows */
+}
+
+.movie-link {
+  text-decoration: none;
+  /* remove underline */
+  color: inherit;
+  /* keep text same color as parent */
+}
+
+.movie-card {
+  flex: 0 0 calc(25% - 20px);
+  max-width: 200px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+  /* ensure the card fills inside <a> */
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+.movie-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.movie-info {
+  padding: 10px;
+}
+
+.movie-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.movie-actor {
+  font-size: 14px;
+  color: #555;
+}
+
+
+
+/* -------------- movie show one ---------------- */
+
+.movie-details {
+  display: flex;
+  gap: 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Left column */
+.movie-info {
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.movie-year {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.movie-section {
+  margin-bottom: 15px;
+}
+
+.movie-section h3 {
+  font-size: 18px;
+  margin: 0 0 5px;
+  color: #333;
+}
+
+.movie-section p {
+  margin: 0;
+  font-size: 16px;
+  color: #444;
+}
+
+/* Right column */
+.movie-poster {
+  flex: 0 0 300px;
+}
+
+.movie-poster img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+  .movie-details {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movie-poster {
+    flex: 0 0 auto;
+  }
+}
+
+
+
+
+/* -------- search bar --------------------- */
+
+.search-wrap {
+  max-width: 62%;
+  margin: 35px auto;
+}
+
+/* Form container */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  background: linear-gradient(135deg, #ff42e9, #f199fd);;
+  padding: 12px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.search-group {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+}
+
+/* Inputs */
+.search-input,
+.search-select {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.search-select {
+  width: 160px;
+}
+
+.search-input:focus,
+.search-select:focus {
+  border-color: #999;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Button */
+.search-button {
+  border: none;
+  background: #111;
+  color: #fff;
+  padding: 0 18px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .06s ease, opacity .15s ease;
+  white-space: nowrap;
+}
+
+.search-button:hover {
+  opacity: 0.9;
+}
+
+.search-button:active {
+  transform: translateY(1px);
+}
+
+/* Visually hidden label (for accessibility) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 1px, 1px);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 560px) {
+  .search-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-group {
+    flex-direction: column;
+  }
+
+  .search-select {
+    width: 100%;
+  }
+
+  .search-button {
+    width: 100%;
+    padding: 12px 16px;
+  }
+}
+
+
+/* ------- genres buttons ---------- */
+
+.genre-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.genre-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #ff42e9, #f199fd);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.genre-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
+}
+
+.genre-button:active {
+  transform: translateY(1px);
+}
+

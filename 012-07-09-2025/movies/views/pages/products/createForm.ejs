@@ -1,0 +1,41 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Dishes Page"}) %>
+
+<h3>Create New Product</h3>
+<table>
+    <tr>
+        <td>
+            <form action="./store" method="post" enctype="multipart/form-data">
+                <label for="productName">product Name</label>
+                <input type="text" name="productName" id="productName">
+                <br>
+                <label for="weight">weight</label>
+                <input type="number" name="weight" id="weight">
+                <br>
+                <label for="photo">photo</label>
+                <input type="file" name="photo" id="photo" onchange="photoPreviewFn(this);">
+                <br>
+
+                <input type="submit" value="Create New Product">
+            </form>
+        </td>
+        <td>
+            <img src="" id="photoPreview" alt="photo preview" style="max-width: 55%; max-height: 55%;">
+        </td>
+    </tr>
+</table>
+
+<script>
+    function photoPreviewFn(inputFile) {
+        var file = inputFile.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById("photoPreview").setAttribute("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+
+<%- include('../../partials/siteFooter') %>

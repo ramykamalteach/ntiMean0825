@@ -1,0 +1,24 @@
+Complete movie system
+
+1- correct side menu links in dashboard
+    - for admin :
+        - home of dashboard (Home)
+        - manage accounts (accounts)
+        - suggested movies (movies)
+        - change password (password)
+    for user :
+        - home of dashboard (Home)
+        - add new movie (Add Movie)
+        - edit movie (edit movie)
+        - change password (password)
+
+2- user edit "his" rejected movie
+        - admin reject the suggested movie 
+            - and write his note
+        - user see "his" rejected movie in "edit movie" page
+            - "edit movie" page table : movie title, admin note, edit button
+        - user press edit button to view page of movie edit
+        - user edit rejected movie (admin note)
+        - admin see edited movie in suggested movies list
+
+        

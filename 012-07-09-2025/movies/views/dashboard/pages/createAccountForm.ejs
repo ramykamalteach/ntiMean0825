@@ -1,0 +1,47 @@
+<%- include('../partials/headerLayout.ejs', {pageName: "Create New User" , pathLevel: "../" }) %>
+
+    <!-- Blank Start -->
+    <div class="col-sm-12 col-xl-12  p-4">
+        <div class="d-flex align-items-center justify-content-between mb-3">                            
+            <h3>Create Account</h3>
+        </div>
+
+        <%if(msg) {%>
+            <div class="alert-warning">
+                <%= msg %>
+            </div>
+        <%}%>
+
+        <form action="/storeUser" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="form-floating mb-3">
+                <input type="text" name="fullname" class="form-control" id="floatingText" placeholder="jhondoe">
+                <label for="floatingText">full name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" name="username" class="form-control" id="floatingInput" placeholder="user name">
+                <label for="floatingInput">user name</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="password" name="password" class="form-control" id="floatingPassword"
+                    placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword"
+                    placeholder="confirmPassword">
+                <label for="confirmPassword">confirm Password</label>
+            </div>
+            <div class="form-floating mb-4" style="display: flex; gap: 10px;">
+                <input type="radio" name="userRole" id="userRole" value="admin" checked> Admin
+                <input type="radio" name="userRole" id="userRole" value="user"> User
+                <!-- <label for="userRole">User role</label> -->
+            </div>
+
+            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Create Account</button>
+        </form>
+    </div>
+    <!-- Blank End -->
+
+
+
+    <%- include('../partials/footerLayout.ejs', { pathLevel: "/" }) %>
