@@ -1,0 +1,119 @@
+
+🔹 What is an API?
+
+    API = Application Programming Interface
+
+        It’s a general term.
+
+        An API defines how two systems talk to each other.
+
+        It doesn’t care about format, style, or protocol.
+
+    Examples:
+
+        A library API in C++ or Java (function calls).
+
+        A GraphQL API.
+
+        A SOAP API.
+
+        A REST API.
+
+        👉 So API is the umbrella term.
+
+🔹 What is a RESTful Service?
+
+    REST = Representational State Transfer
+
+        A style of building APIs, not a technology.
+
+        RESTful services are web services that follow the REST principles.
+
+        They usually use HTTP methods in a predictable way:
+
+            GET → Retrieve data
+
+            POST → Create new data
+
+            PUT/PATCH → Update data
+
+            DELETE → Remove data
+
+    REST focuses on resources (nouns) instead of actions (verbs).
+
+        Example:
+            /students/123/courses (resource: student’s courses)
+
+    Instead of: /getStudentCourses?id=123
+
+    REST responses are often JSON (but can be XML, text, etc.).
+
+
+✅ In short:
+
+    All RESTful services are APIs.
+
+    But not all APIs are RESTful (some are SOAP, gRPC, GraphQL, etc.).
+
+
+
+-------------------------------------------------------------------------------
+
+When you convert an MVC web application into a RESTful service :
+    - Controller = handles requests, but instead of rendering views, it returns JSON/XML
+        - Example :
+            convert :
+                res.render("pages/products/index", { products });
+            into :
+                res.json(products);
+
+    - Controller = instead of redirect to view :
+                res.redirect("/products");
+            should send message tell opearation result :
+                res.status(400).json({ found_errors: formattedErrors });
+                res.status(200).json({ "message": "product added !" });
+
+
+    - should convert :
+            app.use(webRouter);
+        into :
+            app.use("/api/v1.0", webRouter);
+
+
+-------------------------------------------------------------------------------
+
+Download Postman
+    https://www.postman.com/downloads/
+
+Pastman : Postman is a popular API client / testing tool that developers use to build, test, and document APIs.
+
+    Think of it as a workbench for APIs — instead of writing frontend code just to test your backend, you can use Postman to directly send requests and see the responses.
+
+What you can do with Postman
+
+    - Send HTTP requests (GET, POST, PUT, DELETE, PATCH, …).
+        Example: Test your RESTful API endpoint /api/v1.0/students/123.
+
+    - Add headers, params, and body easily.
+        Example: Send a POST request with JSON { "name": "Ali" }.
+
+    - Check responses:
+        Status codes (200, 404, 500 etc.).
+        Response body (JSON, HTML, text).
+
+    - Organize APIs into collections (like saving bookmarks).
+
+    - Automated testing: Write test scripts to validate responses.
+
+    - Collaboration: Share API collections with teammates.
+
+
+🔹 Why developers use Postman
+
+    Saves time (no need to write frontend code just to test).
+    Debugging becomes easier (you see requests and responses clearly).
+    Useful for both backend developers (building APIs) and frontend/mobile developers (consuming APIs).
+
+
+----------------------------------------------------------------
+

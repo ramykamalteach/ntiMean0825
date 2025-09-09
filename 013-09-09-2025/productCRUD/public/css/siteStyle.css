@@ -1,0 +1,36 @@
+body {
+    border: 3px red solid;
+    margin: 0 5%;
+    padding: 0 5%;
+}
+
+
+/* ------ dishes ---------------- */
+.allDishes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.oneDish {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 45%;
+}
+.dishPhoto img {
+    width: 160px;
+    border-radius: 15px;
+    margin: 0 15px;
+}
+
+/* ----------------------------- */
+table {
+    width: 77%;
+    margin: 0 auto;
+}
+tr:nth-child(odd) {
+    background-color: lightskyblue;
+}
