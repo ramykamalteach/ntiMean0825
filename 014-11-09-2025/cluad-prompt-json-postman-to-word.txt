@@ -1,0 +1,2 @@
+i want to create a word file describes to frontend developer the endpoints tested in postman and written in this json file. describe every endpoint in table . separate each table for every endpoint by page break
+

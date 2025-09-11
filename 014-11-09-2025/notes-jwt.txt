@@ -1,0 +1,47 @@
+JSON Web Tokens (JWT)
+
+------------------------------------------------------------------------
+> npm install bcrypt
+> npm install jsonwebtoken
+
+------------------------------------------------------------------------
+add to api router :
+
+const authController = require('../controllers/authController');
+//////////////////////////
+apiRouter.post('/signin', (req, res) => {
+    authController.signin(req, res);
+});
+
+apiRouter.post('/signup', (req, res) => {
+    authController.signup(req, res);
+});
+///////////////////////
+apiRouter.use(authController.verifySignin);
+
+
+------------------------------------------------------------------------
+add to .env :
+
+JWT_SECRET_KEY='{[Ramy@2025-MeAnSTack^9876#'
+
+
+------------------------------------------------------------------------
+
+add authController.js 
+
+
+------------------------------------------------------------------------
+
+add authModel.js
+
+------------------------------------------------------------------------
+
+test in postman
+    - signup : Body -> x-www-form-urlencoded (userName, fullName, password, role) :post
+    - signin : Body -> x-www-form-urlencoded (userName, password) :post
+    
+    - all products : Authorization -> Bearer Token (Token from signin )
+
+    
+ 
