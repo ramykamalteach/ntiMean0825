@@ -1,0 +1,431 @@
+
+OOP Features in TypeScript
+    Typescript brings strong typing and OOP features (like classes, inheritance, interfaces) on top of JavaScript’s prototype-based model.
+
+-----------
+1- Classes
+
+class Person {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  greet(): void {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+
+const p1 = new Person("Alice");
+p1.greet(); // Hello, my name is Alice
+
+
+---------
+
+2- Inheritance
+
+class Animal {
+  constructor(public name: string) {}
+  speak(): void {
+    console.log(`${this.name} makes a sound`);
+  }
+}
+
+class Dog extends Animal {
+  speak(): void {
+    console.log(`${this.name} barks`);
+  }
+}
+
+const d = new Dog("Rex");
+d.speak(); // Rex barks
+
+
+-----------
+
+3- Access Modifiers
+    public (default) → accessible everywhere
+    private → accessible only inside the class
+    protected → accessible inside class & subclasses
+
+
+class Car {
+  public brand: string;
+  private speed: number = 0;
+  protected model: string;
+
+  constructor(brand: string, model: string) {
+    this.brand = brand;
+    this.model = model;
+  }
+
+  accelerate(amount: number) {
+    this.speed += amount;
+    console.log(`Speed: ${this.speed}`);
+  }
+}
+
+
+
+--------------
+4- Abstract Classes
+    Cannot be instantiated directly; only extended.
+    They define a blueprint.
+
+
+abstract class Shape {
+  abstract area(): number; // must be implemented
+}
+
+class Circle extends Shape {
+  constructor(public radius: number) {
+    super();
+  }
+  area(): number {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+
+-------------
+5- Interfaces as Contracts
+
+
+interface Drivable {
+  drive(): void;
+}
+
+class Bike implements Drivable {
+  drive() {
+    console.log("Riding a bike");
+  }
+}
+
+
+-------------
+6- Polymorphism
+    You can treat different subclasses as the same parent type.
+
+    
+const animals: Animal[] = [new Dog("Rex"), new Animal("Generic")];
+animals.forEach(a => a.speak());
+
+
+
+--------------------------------------------------------------------
+
+Dependency Injection (DI)
+  - is not specific to TypeScript, but TypeScript makes it easier with classes, interfaces, and decorators.
+  - Dependency Injection (DI) is an OOP design pattern where a class doesn’t create its own dependencies.
+Instead, they are “injected” (passed in) from the outside.
+
+
+- example Without Dependency Injection
+
+class MySQLDatabase {
+  connect() {
+    console.log("Connected to MySQL");
+  }
+}
+
+class UserService {
+  private db: MySQLDatabase;
+
+  constructor() {
+    this.db = new MySQLDatabase();
+  }
+
+  getUser() {
+    this.db.connect();
+    console.log("Fetching user...");
+  }
+}
+
+const service = new UserService();
+service.getUser();
+
+
+
+- example With Dependency Injection
+
+interface Database {
+  connect(): void;
+}
+
+class MySQLDatabase implements Database {
+  connect() {
+    console.log("Connected to MySQL");
+  }
+}
+
+class MongoDBDatabase implements Database {
+  connect() {
+    console.log("Connected to MongoDB");
+  }
+}
+
+class UserService {
+  constructor(private db: Database) {}
+
+  getUser() {
+    this.db.connect();
+    console.log("Fetching user...");
+  }
+}
+
+// Inject MySQL
+const mysqlService = new UserService(new MySQLDatabase());
+mysqlService.getUser();
+
+// Inject MongoDB
+const mongoService = new UserService(new MongoDBDatabase());
+mongoService.getUser();
+
+-----------------
+
+Why Use DI?
+
+    - Loose coupling → swap dependencies easily
+
+    - Testability → inject mock objects in unit tests
+
+    - Reusability → same class can work with different implementations
+
+
+--------------------------------------------------------------------
+
+
+Type and Interface
+    are used to define the shape of objects, but they have some key differences in capabilities, flexibility, and usage.
+
+    
+    Readability & Ecosystem :
+        interface → Best for object-oriented patterns (shapes, contracts, APIs).
+        type → Best for unions, utility types, and complex type manipulations.
+
+
+------
+ex-01 : 
+    Both can define an object’s shape
+
+// using type
+type UserType = {
+  id: number;
+  name: string;
+};
+
+// using interface
+interface UserInterface {
+  id: number;
+  name: string;
+}
+
+const u1: UserType = { id: 1, name: "Alice" };
+const u2: UserInterface = { id: 2, name: "Bob" };
+
+------
+ex-02 : 
+    Extending / Inheritance
+        Interface → extendable multiple times
+        Type → can use intersections (&)
+
+// interface extending
+interface Person {
+  name: string;
+}
+interface Employee extends Person {
+  salary: number;
+}
+
+// type with intersection
+type PersonType = { name: string };
+type EmployeeType = PersonType & { salary: number };
+
+
+------
+ex-03 :
+    Declaration Merging (Only Interfaces)
+        Interfaces merge automatically if declared multiple times; type does not.
+
+
+interface Book {
+  title: string;
+}
+interface Book {
+  author: string;
+}
+
+const b: Book = { title: "1984", author: "Orwell" }; //  works
+
+// This won't work with "type"
+
+
+------
+ex-04 :
+    Aliases for Other Types (Only type)
+        type can represent unions, primitives, tuples, function signatures, etc.
+        interface cannot.
+
+
+// union
+type Status = "success" | "error" | "loading";
+
+// tuple
+type Point = [number, number];
+
+// function type
+type Add = (a: number, b: number) => number;
+
+
+------
+ex-05 :
+    Implements (Classes)
+        Both type and interface can be used with classes, but interface is more natural.
+
+
+interface Animal {
+  name: string;
+  speak(): void;
+}
+
+class Dog implements Animal {
+  name = "Rex";
+  speak() {
+    console.log("Woof!");
+  }
+}
+
+
+
+------------------------------------------------------------------------------
+
+
+Generics in TypeScript
+
+a way to create reusable components (functions, classes, interfaces, types) that can work with any data type while still maintaining type safety.
+
+Instead of hardcoding a specific type, you define a "placeholder" type (usually written as <T>) that gets replaced when the function or class is used.
+
+Why Use Generics?
+    Reusability → Write once, work with many types.
+    Type safety → The compiler checks that the correct types are used.
+    Better readability → Clearer than using any.
+
+*** Generics let you create flexible, reusable, and type-safe code in TypeScript.
+
+---------
+ex-01 :
+
+function identity<T>(value: T): T {
+  return value;
+}
+
+let num = identity<number>(42);   // T = number → returns number
+let str = identity("Hello");      // T = string (inferred) → returns string
+
+--------
+ex-02
+
+function getFirstElement<T>(arr: T[]): T {
+  return arr[0];
+}
+
+const firstNum = getFirstElement([10, 20, 30]); // number
+const firstStr = getFirstElement(["a", "b", "c"]); // string
+
+-------
+ex-03
+
+interface Box<T> {
+  value: T;
+}
+
+const numberBox: Box<number> = { value: 100 };
+const stringBox: Box<string> = { value: "TypeScript" };
+
+------
+ex-04
+
+class Stack<T> {
+  private items: T[] = [];
+
+  push(item: T) {
+    this.items.push(item);
+  }
+
+  pop(): T | undefined {
+    return this.items.pop();
+  }
+}
+
+const numStack = new Stack<number>();
+numStack.push(1);
+numStack.push(2);
+
+const strStack = new Stack<string>();
+strStack.push("a");
+strStack.push("b");
+
+-------
+ex-04
+
+function getLength<T extends { length: number }>(item: T): number {
+  return item.length;
+}
+
+getLength("Hello"); // string has length
+getLength([1, 2, 3]); // array has length
+// getLength(123); number doesn’t have length
+
+
+
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+
+Task:
+
+Build a simple mini library system using TypeScript. Apply functions, types, classes, inheritance, interfaces, and generics.
+
+Step 1 – Define Types & Interfaces
+
+  1- Create a Book type with:
+      id: number
+      title: string
+      author: string
+  2- Create an interface Borrowable with:
+      borrow(user: string): void
+      returnBook(): void
+
+Step 2 – Implement Classes
+
+  1- Create a LibraryItem base class with:
+      a constructor that takes id: number, title: string
+      a method getInfo(): string → returns a formatted string.
+
+  2- Create a BookItem class that:
+      extends LibraryItem
+      implements Borrowable
+      stores author: string and borrowedBy: string | null
+      implements the borrow/return logic with console logs.
+
+Step 3 – Use Generics
+  1- Create a generic class Library<T> that stores items of type T[].
+      Methods: add(item: T), getAll(): T[].
+
+Step 4 – Test the System
+  1- Create a new Library<BookItem>.
+  2- Add 2 books.
+  3- Borrow one book, return it, then log all books’ info.
+
+
+
+Notes to solve :
+
+    Types & interfaces (Book, Borrowable)
+    OOP concepts (LibraryItem, BookItem with inheritance + interface)
+    Access modifiers (make borrowedBy private/protected)
+    Generics (Library<T>)
+    Functions (getInfo(), borrow/return)
+
