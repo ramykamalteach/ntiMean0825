@@ -1,0 +1,169 @@
+Angular :
+    is a front-end web application framework developed and maintained by Google. It’s used to build dynamic, single-page applications (SPAs) where the content updates automatically without requiring a full page reload.
+
+    - Building dynamic websites (e.g., dashboards, admin panels, e-commerce).
+    - Creating enterprise-level web apps (because of its scalability and structured architecture).
+    - Developing progressive web apps (PWAs).
+        - a type of web application that combines the best features of both web and mobile apps: it can work offline, load quickly, be installed on a device’s home screen, and provide a native-like user experience.
+            - Offline Support → Works without internet using caching.
+            - Installable → Users can “install” the app to their home screen without app stores.
+            - Push Notifications → Re-engage users with timely updates.
+            - Responsive & Fast → Works across devices and networks.
+            - Secure → Served over HTTPS.
+
+Angular setup :
+    - install node & npm
+    - Install Angular CLI (Command Line Interface)
+        > npm install -g @angular/cli
+        > ng version
+        
+    
+Create a New Angular Project
+    > ng new my-app
+        > Would you like to share pseudonymous usage data
+            > no
+        > Which stylesheet format would you like to use?
+            > css
+        > Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)?
+            > no
+        > Do you want to create a 'zoneless' application without zone.js?
+            > no
+        > Which AI tools do you want to configure with Angular best practices?
+            > none
+
+    - Run the Development Server
+        > ng serve
+            - http://localhost:4200/
+
+    - Application files :
+        - package.json
+            Manages dependencies and scripts.
+        - tsconfig.json
+            Configures TypeScript compiler options.
+        - angular.json
+            Configures Angular CLI build & project settings.
+    
+    Application folders :
+        - .angular
+            Internal working directory for Angular CLI.
+                ** Build cache, temporary files, and other auto-generated data.
+                ** Helps speed up builds and development server restarts.
+                ** You should not edit this folder — it’s managed automatically.
+        - public
+            Stores static files that don’t go through Angular’s build pipeline.
+                ** Anything you put here is copied directly to the final dist/ build folder and is available at the root of your deployed app.
+        - src
+            Main source code of your Angular application.
+                - main.ts → entry point, bootstraps the Angular app.
+                - index.html → root HTML file (Angular renders inside <app-root> here).
+                - styles.css (or .scss) → global styles.
+                - app/ → your main application code:
+                    - app.module.ts → root Angular module.
+                    - app.component.* → default root component (HTML, CSS, TS, test).
+                
+                ** This is the heart of your Angular app — all components, services, and modules live here.
+    
+----------------------------------------------------------------------
+
+src/app structure might look like this :
+
+src/app/
+│── app.module.ts
+│── app.component.ts
+│── app.component.html
+│── app.component.css
+│── app.component.spec.ts
+│
+├── components/
+│    └── header/
+│        ├── header.component.ts
+│        ├── header.component.html
+│        ├── header.component.css
+│        └── header.component.spec.ts
+│
+├── pages/
+│    └── home/
+│        ├── home.component.ts
+│        ├── home.component.html
+│        └── home.component.css
+│
+├── services/
+│    └── auth.service.ts
+│
+├── models/
+│    └── user.model.ts
+│
+├── guards/
+│    └── auth.guard.ts
+│
+└── pipes/
+     └── date-format.pipe.ts
+
+
+------------------------------------
+
+components/
+    Houses reusable UI building blocks (e.g., header, footer, user-card).
+
+pages/
+    For larger “page-level” components tied to routes (e.g., home, about, dashboard).
+
+services/
+    Contains business logic and data access code.
+    Services are usually injected into components.
+
+models/
+    TypeScript interfaces or classes that define data structures.
+
+guards/
+    Angular route guards (e.g., auth.guard.ts) that control navigation.
+
+pipes/
+    Custom pipes for transforming data in templates (e.g., dateFormat.pipe.ts).
+
+--------------------------------------------------------------------
+
+create new component :
+    > ng generate component component-name
+    or
+    > ng g c component-name
+
+    if component-name is user-profile, that generates
+        src/app/user-profile/
+            user-profile.component.ts      → Component class (logic)
+            user-profile.component.html    → Template (view/UI)
+            user-profile.component.css     → Styles (scoped to this component)
+            user-profile.component.spec.ts → Unit test
+
+    in user-profile.component.ts
+        import { Component } from '@angular/core';
+
+        @Component({
+            selector: 'app-user-profile',        // <app-user-profile></app-user-profile>
+            templateUrl: './user-profile.component.html',
+            styleUrls: ['./user-profile.component.css']
+        })
+        export class UserProfileComponent {
+            name: string = 'Reda Ali';
+            age: number = 25;
+        }
+
+        - the selector : which be used to add component into another component
+        - so, we can add it into "app component"
+            - in app.ts
+                import { UserProfile } from "./components/user-profile/user-profile";
+            in app.html
+                <app-user-profile></app-user-profile>
+
+        
+Data binding :
+1.	interpolation
+    - <p>Hello, {{ name }}</p>
+2.	Property
+    - <button [disabled]="isLoading">Click me</button>
+3.	Event
+    - <button (click)="handleClick()">Click me</button>
+4.	Two-way
+    - <input type="text" [(ngModel)]="userName">
+
+
