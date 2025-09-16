@@ -155,15 +155,4 @@ create new component :
             in app.html
                 <app-user-profile></app-user-profile>
 
-        
-Data binding :
-1.	interpolation
-    - <p>Hello, {{ name }}</p>
-2.	Property
-    - <button [disabled]="isLoading">Click me</button>
-3.	Event
-    - <button (click)="handleClick()">Click me</button>
-4.	Two-way
-    - <input type="text" [(ngModel)]="userName">
-
 
