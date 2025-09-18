@@ -1,0 +1,10 @@
+<h1>Parent ....</h1>
+
+<app-child (messageEvent)="receiveMessage($event)"></app-child>
+<p>{{ childMessage }}</p>
+
+<hr>
+
+<br>
+
+<app-child [dataFromParent]="parentData"></app-child>

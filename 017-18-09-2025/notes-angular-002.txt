@@ -1,0 +1,136 @@
+
+Data Binding techniques in Component :
+    1- Interpolation (One-way binding: Component → Template)
+        - Used to display component data in the HTML template.
+        
+        - in *.ts file :
+            // app.component.ts
+            import { Component } from '@angular/core';
+            @Component({
+                selector: 'app-root',
+                templateUrl: './app.component.html',
+            })
+            export class AppComponent {
+                itemName = 'LED TV 55 inch';
+                itemPrice = 50999;
+            }
+
+        - in *.html file :
+            <h1>{{ title }}</h1>
+            <p>Welcome, {{ userName }}!</p>
+
+    2- Property Binding (One-way: Component → Template attribute/property)
+        - Used to bind values to DOM element properties or directives.
+        - in *.html file :
+            <input type="text" [value]="userName">
+
+    3- Event Binding (One-way: Template → Component)
+        - Used to handle user actions like clicks, input, etc.
+
+        - in *.ts file :
+            onInput(event: Event) {
+                const inputElement = event.target as HTMLInputElement;
+                this.userName = inputElement.value;
+            }
+
+        - in *.html file :
+            <input type="text" (input)="onInput($event)">
+            <h1>{{ userName }}</h1>
+
+    4- Two-way Binding (Component ⇄ Template)
+        - Uses [(ngModel)] from FormsModule to sync data both ways.
+
+        - in *.ts file :
+            import { FormsModule } from '@angular/forms';
+
+            @NgModule({
+                imports: [FormsModule],
+            })
+            export class AppModule {}
+
+        - in *.html file :
+            <input type="text" [(ngModel)]="userName">
+            <p>Your name is: {{ userName }}</p>
+
+
+-------------------------------------------------------------------
+
+Data binding between parent and child components in Angular
+
+    There are two main directions:
+        Parent → Child (using @Input())
+        Child → Parent (using @Output() + EventEmitter)
+
+    1- Parent → Child (Passing Data with @Input())
+        - You send data from a parent component to a child component.
+        
+        - in Child *.ts :
+            
+            import { Component, Input } from '@angular/core';
+
+            @Component({
+                selector: 'app-child',
+                template: `<p>Child received: {{ data }}</p>`
+            })
+            export class ChildComponent {
+                @Input() data!: string; // receives data from parent
+            }
+
+        - in Parent *.ts :
+
+            // parent.component.ts
+            import { Component } from '@angular/core';
+
+            @Component({
+                selector: 'app-parent',
+                template: `
+                    <h2>Parent Component</h2>
+                    <app-child [data]="parentMessage"></app-child>
+                `
+            })
+            export class ParentComponent {
+                parentMessage = 'Hello from Parent!';
+            }
+
+
+    2- Child → Parent (Sending Data with @Output())    
+        - The child sends events/data back to the parent.
+
+        - in Child *.ts :
+
+            import { Component, Output, EventEmitter } from '@angular/core';
+
+            @Component({
+                selector: 'app-child',
+                template: `
+                    <button (click)="sendMessage()">Send to Parent</button>
+                `
+            })
+            export class ChildComponent {
+                @Output() messageEvent = new EventEmitter<string>();
+
+                sendMessage() {
+                    this.messageEvent.emit('Hello Parent, from Child!');
+                }
+            }
+
+        - in Parent *.ts :
+        
+            import { Component } from '@angular/core';
+
+            @Component({
+                selector: 'app-parent',
+                template: `
+                    <h2>Parent Component</h2>
+                    <app-child (messageEvent)="receiveMessage($event)"></app-child>
+                    <p>{{ childMessage }}</p>
+                `
+            })
+            export class ParentComponent {
+                childMessage = '';
+
+                receiveMessage(msg: string) {
+                    this.childMessage = msg;
+                }
+            }
+

@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-12">
+        <h2>
+            Blogs
+        </h2>
+    </div>
+</div>
+<div class="row mb-2">
+    @for (oneBrief of blogData; track $index) {
+        <div class="col-md-6">
+            <app-one-blog [blogCardData]="oneBrief"></app-one-blog>
+        </div>
+    }
+
+
+
+</div>
