@@ -1,0 +1,15 @@
+<h1>Products</h1>
+
+<div class="product-list">
+    @for (product of products; track product._id) {
+    <div class="product-card">
+        <img [src]="'http://localhost:3001/img/uploades/' + product.photo" [alt]="product.productName"
+            class="product-photo" />
+        <div class="product-info">
+            <h2 class="product-name">{{ product.productName }}</h2>
+            <p class="product-weight">Weight: {{ product.weight }} kg</p>
+            <p class="product-id">ID: {{ product._id }}</p>
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,168 @@
+Restful : 
+    - multiple ways to fetch data from a RESTful service :
+        1- HttpClient (recommended)
+        2- Fetch API (Native JavaScript)
+        3- RxJS ajax (from rxjs/ajax)
+        4- GraphQL Clients (if API is GraphQL)
+        5- Third-party Libraries (such as axios)
+
+    ** Use HttpClient for RESTful APIs because:
+        - It integrates with Angular’s DI.
+        - Works with interceptors (auth, logging).
+        - Handles Observables (better than Promises for streams and cancelation).
+
+------------------------
+
+Restful to get Meals from backend :
+
+    - Create proxy.conf.json in root
+    - its code :
+        {
+            "/api": {
+                "target": "http://localhost:3001",
+                "secure": false,
+                "changeOrigin": true
+            }
+        }
+
+        > ng serve --proxy-config proxy.conf.json
+
+    - add provideHttpClient() to providers in app.config.ts
+
+    *******OR
+        add cors in backend
+
+    ---------------------------------
+    - Create Product interface
+        > ng g i interfaces/Product
+        - code :
+
+            export interface Product {
+                _id: string;
+                productName: string;
+                weight: number;
+                photo: string;
+                __v: number;
+                userId: string;
+            }
+
+
+    
+    - Create a Service to Fetch Data
+        > ng g s services/Product.service
+        - code :
+
+            import { HttpClient } from '@angular/common/http';
+            import { Injectable } from '@angular/core';
+            import { Observable } from 'rxjs/internal/Observable';
+            import { Product } from '../interfaces/product';
+
+            @Injectable({
+                providedIn: 'root'
+            })
+            export class ProductService {
+                private apiUrl = '/api/v1.0/products';
+                constructor(private http: HttpClient) { }
+
+                getMeals(): Observable<Product[]> {
+                    return this.http.get<Product[]>(this.apiUrl);
+                }
+            }
+
+
+
+    - Create Component and Use the Service in a Component
+        > ng g c components/Products
+        - code :
+
+            import { Component } from '@angular/core';
+            import { Product } from '../../interfaces/product';
+            import { ProductService } from '../../services/product.service';
+
+            @Component({
+                selector: 'app-products',
+                imports: [],
+                templateUrl: './products.html',
+                styleUrl: './products.css'
+            })
+            export class Products {
+                products: Product[] = [];
+
+                constructor(private productService: ProductService) { }
+
+                ngOnInit(): void {
+                        this.productService.getMeals().subscribe((data) => {
+                        this.products = data;
+                    });
+                }
+            }
+
+
+
+        - in component html :
+            <h1>Products</h1>
+
+            <div class="product-list">
+                @for (product of products; track product._id) {
+                <div class="product-card">
+                    <img [src]="'http://localhost:3001/img/uploades/' + product.photo" [alt]="product.productName" class="product-photo" />
+                    <div class="product-info">
+                        <h2 class="product-name">{{ product.productName }}</h2>
+                        <p class="product-weight">Weight: {{ product.weight }} kg</p>
+                        <p class="product-id">ID: {{ product._id }}</p>
+                    </div>
+                </div>
+                }
+            </div>
+
+
+        - in component css :
+            .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            }
+
+            .product-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .product-photo {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            }
+
+            .product-info {
+            padding: 15px;
+            }
+
+            .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            }
+
+            .product-weight {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 5px;
+            }
+
+            .product-id {
+            font-size: 0.8rem;
+            color: #999;
+            }
+
+

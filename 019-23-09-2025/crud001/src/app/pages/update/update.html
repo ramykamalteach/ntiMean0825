@@ -1,0 +1,28 @@
+<h2>Update Product</h2>
+
+@if (isLoading) {
+<div class="loading">Loading product...</div>
+} @else {
+
+<form (ngSubmit)="update()">
+  <input [(ngModel)]="product.productName" name="productName" placeholder="Product Name" [value]="product.productName"
+    required />
+  <input [(ngModel)]="product.weight" name="weight" type="number" placeholder="Weight" [value]="product.weight"
+    required />
+
+  <!-- File upload -->
+  <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+  <small class="file-help">Leave empty to keep current photo</small>
+
+  <!-- Image preview -->
+  @if (previewUrl) {
+  <div class="photo-preview">
+    <img [src]="previewUrl" alt="Product Preview" />
+  </div>
+  }
+
+  <button type="submit" [disabled]="isLoading">Update Product</button>
+</form>
+
+<a (click)="goBack()">Cancel</a>
+}

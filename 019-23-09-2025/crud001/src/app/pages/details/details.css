@@ -1,0 +1,47 @@
+/* Details card without border or background */
+.details-card {
+  max-width: 500px;
+  margin: 0 auto 30px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: none;
+  background: none;
+  border: none;
+}
+
+.details-image img {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  object-fit: cover;
+}
+
+.details-info h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.details-info p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Back button */
+.btn-back {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #007bff, #0062cc);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}

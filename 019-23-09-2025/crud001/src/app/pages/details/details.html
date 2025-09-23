@@ -1,0 +1,23 @@
+<h2 class="details-title">Product Details</h2>
+
+@if (productService.loading()) {
+  <p>Loading...</p>
+}
+@if (productService.error()) {
+  <p class="error">{{ productService.error() }}</p>
+}
+
+@if (product) {
+  <div class="details-card">
+    <div class="details-image">
+      <img [src]="`http://localhost:3001/img/uploades/${product.photo}`"
+           alt="{{ product.productName }}" />
+    </div>
+    <div class="details-info">
+      <h3>{{ product.productName }}</h3>
+      <p>{{ product.weight }}</p>
+    </div>
+  </div>
+}
+
+<a class="btn-back" (click)="goBack()">← Back</a>

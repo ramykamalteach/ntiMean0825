@@ -1,0 +1,25 @@
+<a (click)="createProduct()">Create New Product</a>
+
+<div class="product-list">
+  @for (product of products; track product._id) {
+    <div class="product-card">
+      <!-- Left: Large Image -->
+      <div class="product-image">
+        <img [src]="`http://localhost:3001/img/uploades/${product.photo}`"
+             alt="{{ product.productName }}" />
+      </div>
+
+      <!-- Right: Info + Buttons -->
+      <div class="product-info">
+        <h2>{{ product.productName }}</h2>
+        <p>{{ product.weight }}</p>
+
+        <div class="actions-vertical">
+          <button class="btn btn-show" (click)="showDetails(product._id)">Show</button>
+          <button class="btn btn-edit" (click)="updateProduct(product._id)">Edit</button>
+          <button class="btn btn-delete" (click)="deleteProduct(product._id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

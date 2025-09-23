@@ -1,0 +1,20 @@
+<h2>Create Product</h2>
+
+<form (ngSubmit)="save()">
+  <input [(ngModel)]="product.productName" name="productName" placeholder="Product Name" required />
+  <input [(ngModel)]="product.weight" name="weight" type="number" placeholder="Weight (g)" required />
+
+  <!-- File upload -->
+  <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+
+  <!-- Image preview -->
+  @if (previewUrl) {
+    <div class="photo-preview">
+      <img [src]="previewUrl" alt="Meal Preview" />
+    </div>
+  }
+
+  <button type="submit">Save</button>
+</form>
+
+<a (click)="goBack()">Cancel</a>
