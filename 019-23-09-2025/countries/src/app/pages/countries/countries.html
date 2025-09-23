@@ -1,3 +1,14 @@
 <h1>
-    Countries that speak ......
+    Countries that speak {{ lang }}
 </h1>
+
+<div class="countries-grid">
+  @for (country of countries; track country.cca3) {
+    <div class="country-card">
+      <a [routerLink]="['/country', country.cca3]" class="card-link">
+        <img [src]="country.flags.png" [alt]="country.flags.alt" class="flag" />
+        <h3 class="name">{{ country.name.common }}</h3>
+      </a>
+    </div>
+  }
+</div>

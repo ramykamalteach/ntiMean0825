@@ -1,0 +1,39 @@
+.countries-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 cards per row */
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.country-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+
+.country-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 1rem;
+}
+
+.flag {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  margin: 0 auto 0.5rem auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+}

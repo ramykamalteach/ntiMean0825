@@ -1,5 +1,5 @@
 .navbar {
-  background: #0f172a;
+  background: #015c4b;
   padding: 0.8rem 1.5rem;
   display: flex;
   gap: 1rem;
@@ -20,4 +20,10 @@
 .nav-link:hover {
   background: #2563eb;
   color: #fff;
+}
+
+.active {
+  color: pink;
+  font-weight: bolder;
+  font-size: 1.3rem;
 }

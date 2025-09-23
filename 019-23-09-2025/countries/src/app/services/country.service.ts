@@ -7,7 +7,7 @@ import { Country } from '../interfaces/country';
   providedIn: 'root'
 })
 export class CountryService {
-  private apiUrl = 'https://restcountries.com/v3.1/';
+  private apiUrl = 'https://restcountries.com/v3.1';
 
   constructor(private http: HttpClient) { }
 
