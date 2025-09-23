@@ -1,0 +1,12 @@
+
+
+https://restcountries.com/
+
+navbar : arabic - english - french - spanish
+
+home page : select lang. from navbar
+
+in every lang page display : flag + common name + link to details
+
+details page : flag + common name + region + capital + population + area + timezones
+

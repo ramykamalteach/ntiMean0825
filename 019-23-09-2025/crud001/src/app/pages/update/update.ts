@@ -96,7 +96,7 @@ export class Update implements OnInit {
       formData.append('photo', this.selectedFile);
     }
     
-    this.productService.updateProduct(this.productId, formData).subscribe({
+    this.productService.updateProduct(formData).subscribe({
       next: (response) => {
         this.router.navigate(['/']);
       },

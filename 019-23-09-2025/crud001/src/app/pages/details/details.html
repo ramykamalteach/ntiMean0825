@@ -1,12 +1,5 @@
 <h2 class="details-title">Product Details</h2>
 
-@if (productService.loading()) {
-  <p>Loading...</p>
-}
-@if (productService.error()) {
-  <p class="error">{{ productService.error() }}</p>
-}
-
 @if (product) {
   <div class="details-card">
     <div class="details-image">

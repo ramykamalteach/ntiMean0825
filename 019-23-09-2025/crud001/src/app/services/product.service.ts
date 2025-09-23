@@ -39,7 +39,7 @@ export class ProductService {
     );
   }
 
-  updateProduct(id: string, product: FormData): Observable<Product> {
+  updateProduct(product: FormData): Observable<Product> {
     return this.handleRequest(
       this.http.put<Product>(`${this.apiUrl}/update`, product),
       'product updated successfully!'
