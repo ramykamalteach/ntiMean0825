@@ -1,0 +1,44 @@
+@if (loading) {
+<div class="spinnerParent">
+  <div class="spinner"></div>
+</div>
+} @else if (oneCountry) {
+<div class="country-card">
+
+  <!-- LEFT COLUMN -->
+  <div class="country-left">
+    <img [src]="oneCountry.flags.svg" [alt]="oneCountry.flags.alt || (oneCountry.name.common + ' flag')"
+      class="country-flag" />
+
+    @if (oneCountry.coatOfArms.png) {
+    <div class="coat-of-arms">
+      <img [src]="oneCountry.coatOfArms.png" alt="Coat of Arms" />
+    </div>
+    }
+  </div>
+
+  <!-- MIDDLE COLUMN -->
+  <div class="country-info">
+    <h2 class="country-name">
+      {{ oneCountry.name.common }}
+      <span class="native-name">({{ getNativeName(oneCountry) }})</span>
+    </h2>
+    <p class="official-name">{{ oneCountry.name.official }}</p>
+
+    <ul class="info-list">
+      <li><strong>Capital:</strong> {{ oneCountry.capital[0] }}</li>
+      <li><strong>Region:</strong> {{ oneCountry.region }} – {{ oneCountry.subregion }}</li>
+      <li><strong>Population:</strong> {{ oneCountry.population | number }}</li>
+      <li><strong>Area:</strong> {{ oneCountry.area | number }} km²</li>
+      <li><strong>Languages:</strong> {{ oneCountry.languages | mapToValues }}</li>
+      <li><strong>Currencies:</strong> {{ getCurrencies(oneCountry) }}</li>
+      <li><strong>Borders:</strong> {{ oneCountry.borders.join(', ') || 'None' }}</li>
+    </ul>
+
+    <a [href]="oneCountry.maps.googleMaps" target="_blank" class="map-btn">
+      🌍 View on Google Maps
+    </a>
+  </div>
+
+</div>
+}

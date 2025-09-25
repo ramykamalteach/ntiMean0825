@@ -1,0 +1,20 @@
+@if (loading) {
+<div class="spinnerParent">
+  <div class="spinner"></div>
+</div>
+
+} @else {
+<h1>
+  Countries that speak {{ lang }} - {{ countries.length }} Countries
+</h1>
+<div class="countries-grid">
+  @for (country of countries; let i = $index; track country.cca3) {
+    <div class="country-card" [style.animation-delay]="(i * 0.2) + 's'">
+      <a [routerLink]="['/country/', country.name.common]" class="card-link">
+        <img [src]="country.flags.png" [alt]="country.flags.alt" class="flag" />
+        <h3 class="name">{{ country.name.common }}</h3>
+      </a>
+    </div>
+  }
+</div>
+}
