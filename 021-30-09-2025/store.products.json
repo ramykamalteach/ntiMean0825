@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "68dba1745aefe52e684b98f9"
+  },
+  "productName": "p01",
+  "price": 11,
+  "photo": "1759227918165.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dba1815aefe52e684b98fc"
+  },
+  "productName": "p02",
+  "price": 22,
+  "photo": "1759227929980.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dba18f5aefe52e684b98ff"
+  },
+  "productName": "p03",
+  "price": 33,
+  "photo": "1759224207245.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dba19d5aefe52e684b9902"
+  },
+  "productName": "p04",
+  "price": 44,
+  "photo": "1759224221829.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dba1b15aefe52e684b9905"
+  },
+  "productName": "p05",
+  "price": 55,
+  "photo": "1759224269324.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dbb1075aefe52e684b992a"
+  },
+  "productName": "p06",
+  "price": 66,
+  "photo": "1759228167889.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dbb11a5aefe52e684b992d"
+  },
+  "productName": "p07",
+  "price": 77,
+  "photo": "1759228186523.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68dbb13e5aefe52e684b9932"
+  },
+  "productName": "p08",
+  "price": 88,
+  "photo": "1759228222507.jpg",
+  "__v": 0
+}]
