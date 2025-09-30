@@ -1,8 +1,9 @@
 <h2>🛒 Cart</h2>
-<div *ngFor="let item of cart.items()">
+@for (item of cart.items(); track $index) {
+<div>
     {{ item.name }} (x{{ item.quantity }}) - {{ item.price | currency }}
     <button (click)="remove(item.id)">Remove</button>
-</div>
+</div>}
 
 <p>Total Items: {{ cart.totalQuantity() }}</p>
 <p>Total Price: {{ cart.totalPrice() | currency }}</p>
