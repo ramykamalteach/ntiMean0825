@@ -1,0 +1,22 @@
+@if (loading) {
+<div class="spinnerParent">
+  <div class="spinner"></div>
+</div>
+
+} @else {
+<h1>
+  Store Products
+</h1>
+<div class="products-grid">
+  @for (product of products; let i = $index; track product._id) {
+    <div class="product-card" [style.animation-delay]="(i * 0.2) + 's'">
+      <div class="card-link">
+        <img [src]="[`http://localhost:3001/img/uploades/${product.photo}`]" [alt]="product.productName" class="photo" />
+        <h3 class="name">{{ product.productName }}</h3>
+        <h3 class="price">{{ product.price | currency }}</h3>
+        <button (click)="addToCart(product)">Add to Cart</button>
+      </div>
+    </div>
+  }
+</div>
+}
