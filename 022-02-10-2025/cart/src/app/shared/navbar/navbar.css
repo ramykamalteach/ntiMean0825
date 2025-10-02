@@ -1,0 +1,66 @@
+/* Navbar container */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* space between links and cart */
+  padding: 0.8rem 1.5rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  margin: 1rem auto;
+  max-width: 900px;
+}
+
+/* Nav links */
+.nav-link {
+  margin: 0 0.8rem;
+  text-decoration: none;
+  font-size: 3rem;
+  font-weight: 500;
+  color: #555;
+  transition: color 0.3s, border-bottom 0.3s;
+  position: relative;
+  padding-bottom: 0.2rem;
+}
+
+/* Hover and active states */
+.nav-link:hover {
+  color: #4a90e2;
+}
+
+.nav-link.active {
+  color: #4a90e2;
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: #4a90e2;
+  border-radius: 2px;
+}
+
+/* Cart component placeholder */
+app-cart {
+  margin-left: auto;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+app-cart:hover {
+  transform: scale(1.05);
+}
+
+/* Horizontal line style */
+hr {
+  margin: 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
